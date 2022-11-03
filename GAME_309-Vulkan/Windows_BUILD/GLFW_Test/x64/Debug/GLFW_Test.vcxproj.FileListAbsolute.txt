@@ -1,0 +1,2 @@
+E:\GLFW_Test\GLFW_Test\x64\Debug\GLFW_Test.vcxproj.CopyComplete
+E:\Windows_Vulkan\GLFW_Test\x64\Debug\GLFW_Test.vcxproj.CopyComplete

@@ -1,0 +1,19 @@
+﻿  GLFW_Test.cpp
+E:\Windows_Vulkan\GLFW_Test\GLFW_Test.cpp(55,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Mesh.cpp
+E:\Windows_Vulkan\GLFW_Test\Mesh.cpp(13,32): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\Windows_Vulkan\GLFW_Test\Mesh.cpp(14,30): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\Windows_Vulkan\GLFW_Test\Mesh.cpp(28,32): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\Windows_Vulkan\GLFW_Test\Mesh.cpp(29,30): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  MeshModel.cpp
+  VulkanRenderer.cpp
+E:\Windows_Vulkan\GLFW_Test\VulkanRenderer.cpp(1103,48): warning C4305: 'initializing': truncation from 'double' to 'float'
+E:\Windows_Vulkan\GLFW_Test\VulkanRenderer.cpp(1142,80): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data
+E:\Windows_Vulkan\GLFW_Test\VulkanRenderer.cpp(1477,5): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+E:\Windows_Vulkan\GLFW_Test\VulkanRenderer.cpp(1481,11): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+E:\Windows_Vulkan\GLFW_Test\VulkanRenderer.cpp(1644,32): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+E:\Windows_Vulkan\GLFW_Test\VulkanRenderer.cpp(1706,41): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+E:\Windows_Vulkan\GLFW_Test\Utilities.h(94): warning C4715: 'findMemoryTypeIndex': not all control paths return a value
+E:\Windows_Vulkan\GLFW_Test\Utilities.h(94): warning C4715: 'findMemoryTypeIndex': not all control paths return a value
+  GLFW_Test.vcxproj -> E:\Windows_Vulkan\x64\Debug\GLFW_Test.exe
