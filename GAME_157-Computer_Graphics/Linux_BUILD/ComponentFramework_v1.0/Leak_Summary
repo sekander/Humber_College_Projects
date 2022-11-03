@@ -1,0 +1,7 @@
+
+==68333==    definitely lost: 1,709 bytes in 9 blocks
+==68333==    indirectly lost: 436,078 bytes in 1,900 blocks
+==68333==      possibly lost: 146,738 bytes in 810 blocks
+==68333==    still reachable: 1,308,940 bytes in 5,301 blocks
+==68333==         suppressed: 0 bytes in 0 blocks
+

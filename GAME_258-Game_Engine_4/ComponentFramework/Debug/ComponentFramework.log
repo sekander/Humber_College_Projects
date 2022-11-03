@@ -1,0 +1,28 @@
+﻿  Actor.cpp
+  CameraActor.cpp
+  Debug.cpp
+  EMath.cpp
+  LightActor.cpp
+  LoadingGameObjects.cpp
+  MaterialComponent.cpp
+  MeshComponent.cpp
+F:\School\Graphics_Engines\MAIN-ComponentFramework22.4.5\ComponentFramework\tiny_obj_loader.h(1665,27): warning C4018: '<': signed/unsigned mismatch
+  QMath.cpp
+  Scene1.cpp
+F:\School\Graphics_Engines\MAIN-ComponentFramework22.4.5\ComponentFramework\Scene1.cpp(66,27): warning C4305: 'initializing': truncation from 'double' to 'float'
+F:\School\Graphics_Engines\MAIN-ComponentFramework22.4.5\ComponentFramework\Scene1.cpp(84,22): warning C4305: '+=': truncation from 'double' to 'float'
+F:\School\Graphics_Engines\MAIN-ComponentFramework22.4.5\ComponentFramework\Scene1.cpp(88,23): warning C4305: '=': truncation from 'double' to 'float'
+F:\School\Graphics_Engines\MAIN-ComponentFramework22.4.5\ComponentFramework\Scene1.cpp(95,22): warning C4305: '=': truncation from 'double' to 'float'
+F:\School\Graphics_Engines\MAIN-ComponentFramework22.4.5\ComponentFramework\Scene1.cpp(104,22): warning C4305: '=': truncation from 'double' to 'float'
+  SceneManager.cpp
+  Main.cpp
+  MMath.cpp
+  Scene0.cpp
+  ShaderComponent.cpp
+  Timer.cpp
+  tinyxml2.cpp
+  TransformComponent.cpp
+  VMath.cpp
+  Window.cpp
+  Generating Code...
+  ComponentFramework.vcxproj -> F:\School\Graphics_Engines\MAIN-ComponentFramework22.4.5\Debug\ComponentFramework.exe

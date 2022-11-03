@@ -1,0 +1,133 @@
+Thu Nov  3 03:27:32 2022
+[INFO]: OpenGL version: 4.6.0 - Build 31.0.101.2111
+[INFO]: Graphics card vendor Intel
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"modelMatrix" loc:1
+"noiseTexture" loc:2
+"normalMatrix" loc:0
+"offset" loc:3
+"projectionMatrix" loc:4
+"viewMatrix" loc:5
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene0: 
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"lightPos" loc:2
+"modelMatrix" loc:0
+"projectionMatrix" loc:3
+"viewMatrix" loc:1
+"myTexture" loc:4
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene0: 
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"lightPos0" loc:2
+"lightPos1" loc:3
+"light_colour_1" loc:4
+"light_colour_2" loc:5
+"modelMatrix" loc:0
+"projectionMatrix" loc:6
+"viewMatrix" loc:1
+"myTexture" loc:7
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene0: 
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"lightPos" loc:2
+"modelMatrix" loc:0
+"projectionMatrix" loc:3
+"viewMatrix" loc:1
+"myTexture" loc:4
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene0: 
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"lightPos0" loc:2
+"lightPos1" loc:3
+"light_colour_1" loc:4
+"light_colour_2" loc:5
+"modelMatrix" loc:0
+"projectionMatrix" loc:6
+"viewMatrix" loc:1
+"myTexture" loc:7
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene0: 
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"skyboxTexture" loc:2
+
+[INFO]: Uniforms:
+"lightPos" loc:2
+"modelMatrix" loc:0
+"projectionMatrix" loc:3
+"viewMatrix" loc:1
+"myTexture" loc:4
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene0: 
+[INFO]: Uniforms:
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"skyboxTexture" loc:2
+
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"lightPos0" loc:2
+"lightPos1" loc:3
+"light_colour_1" loc:4
+"light_colour_2" loc:5
+"modelMatrix" loc:0
+"projectionMatrix" loc:6
+"viewMatrix" loc:1
+"myTexture" loc:7
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene0: 
+[INFO]: Uniforms:
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"skyboxTexture" loc:2
+
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"modelMatrix" loc:1
+"normalMatrix" loc:0
+"projectionMatrix" loc:2
+"viewMatrix" loc:3
+"skyboxTexture" loc:4
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Created Scene0: 
+[INFO]: Uniforms:
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"skyboxTexture" loc:2
+
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"modelMatrix" loc:1
+"noiseTexture" loc:2
+"normalMatrix" loc:0
+"offset" loc:3
+"projectionMatrix" loc:4
+"viewMatrix" loc:5
+
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
+[INFO]: Deleting the SceneManager
