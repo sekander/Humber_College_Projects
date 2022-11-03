@@ -1,0 +1,539 @@
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/ext/matrix_transform.hpp>
+
+#include <glm/ext/vector_float3.hpp>
+#include <iostream>
+
+#include "resource_manager.h"
+#include "sprite_renderer.h"
+#include "Orthographic_camera.h"
+
+
+#include "Ship.h"
+
+double lastTime = glfwGetTime();
+int nb_frames = 0;
+
+SpriteRenderer    *Renderer;
+Ship* s;
+
+//Sekander::EntityManager *manager;
+GLFWwindow* create_openGL_window(int opengl_major_ver, int opengl_minor_ver, const char* win_title, int screen_width, int screen_height );
+
+
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow *window);
+
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+void simulate()
+{
+
+
+
+}
+
+// settings
+//const unsigned int SCR_WIDTH = 800;
+//const unsigned int SCR_HEIGHT = 600;
+
+const unsigned int SCR_WIDTH = 1366;
+const unsigned int SCR_HEIGHT = 768;
+// camera
+float lastX = SCR_WIDTH / 2.0f;
+float lastY = SCR_HEIGHT / 2.0f;
+bool firstMouse = true;
+
+// timing
+float deltaTime = 0.0f;	// time between current frame and last frame
+float lastFrame = 0.0f;
+
+
+//positons 
+float x, y, r;
+glm::vec3 start, end;
+
+
+float x_cam, y_cam, z_cam, r_cam;
+glm::vec2 z_scale;
+//Orthographic_camera o_cam(-1.0f, 1.0f, -1.0f, 1.0f);                                                                                                               
+Orthographic_camera *o_cam = new Orthographic_camera(0.0f, SCR_WIDTH, SCR_HEIGHT, 0.0f, -1.0f, 100.0f);                                                                                                               
+
+
+
+int main()
+{
+    // glfw: initialize and configure
+    // ------------------------------
+    GLFWwindow* window = create_openGL_window(3, 3, "Nahid's open_gl Window", SCR_WIDTH, SCR_HEIGHT);
+    // load shaders
+    ResourceManager::LoadShader("sprite.vs", "sprite.fs", nullptr, "sprite");
+    // configure shaders
+    //glm::mat4 projection = glm::ortho(0.0f, SCR_WIDTH, SCR_HEIGHT, 0.0f, -1.0f, 1.0f);
+    //glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(SCR_WIDTH), static_cast<float>(SCR_HEIGHT), 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = o_cam->return_matrix();
+    ResourceManager::GetShader("sprite")->Use().SetInteger("sprite", 0);
+    ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection);
+//    ResourceManager::GetShader("sprite")->SetMatrix4("projection", o_cam->return_matrix());
+
+    ResourceManager::LoadTexture("resources/images/tori.png", true, "sky");
+    ResourceManager::LoadTexture("resources/images/red.png", true, "player");
+    ResourceManager::LoadTexture("resources/images/awesomeface.png", true, "face");
+ //   ResourceManager::LoadTexture("resources/images/planet_1.png", true, "planet_1");
+    ResourceManager::LoadTexture("resources/images/face-1.png", true, "planet_1");
+    ResourceManager::LoadTexture("resources/images/face-2.png", true, "planet_2");
+    ResourceManager::LoadTexture("resources/images/face-3.png", true, "planet_3");
+    ResourceManager::LoadTexture("resources/images/face-4.png", true, "planet_4");
+    ResourceManager::LoadTexture("resources/images/face-5.png", true, "planet_5");
+    ResourceManager::LoadTexture("resources/images/walk.png", true, "walk");
+//    ResourceManager::LoadTexture("resources/images/planet-2.jpeg", true, "planet_3");
+ //   ResourceManager::LoadTexture("resources/images/planet-1.jpg", true, "planet_4");
+//    ResourceManager::LoadTexture("resources/images/Exit_button.png", true, "exit");
+
+    //set renderedr
+    Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+//Box2d Code
+
+    Vector2D position;
+    Vector2D velocity;
+    Vector2D force;
+    Vector2D acceleration;
+    int mass;
+    int torque;
+    float angularAcceleration;
+    float angularVelocity;
+    float angle;
+    long rotational_inertia;
+
+    s = new Ship(position, velocity, acceleration, force, torque, mass, angle, angularVelocity, angularAcceleration, rotational_inertia);
+    s ->position.x = 0.0f;
+    s ->position.y = 0.0f;
+    s ->velocity.x = 0.0f;
+    s->velocity.y = 0.0f;
+    s->acceleration.x = 0.0f;
+    s->acceleration.y =0.0f;
+    s->force.x = 0;
+    s->force.y = 0.0f;
+    //s->torque = 10;
+    s->torque = 0;
+    //s->mass = 100000;
+    s->mass = 100000000;
+    s->angularAcceleration = 0.0f;
+    s->angularVelocity = 0.0f;
+    //s->rotational_inertia = 1;
+    s->rotational_inertia = 26700000000;
+	
+    
+
+
+    x = 0.0f;
+    y = 0.0f;
+
+    float i = 0;
+
+    z_scale.x = 0;
+    z_scale.y = 0;
+
+
+    // render loop
+    // -----------
+    while (!glfwWindowShouldClose(window))
+    {
+
+    	nb_frames++;	    
+
+        // per-frame time logic
+        // --------------------
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+
+
+
+        // input
+        // -----
+        processInput(window);
+
+//	x_cam = s->position.x;	
+	
+	o_cam->SetPosition(glm::vec3(s->position.x - 100, s->position.y - 100, 0));
+
+
+
+	s->calculateAngularAcceleration();
+	s->calculateAngularVelocity(s->angularAcceleration, 1 );
+	s->calculateAngle(s->angularVelocity, s->angularAcceleration, 1 );
+	s->calculateForce(s->force, s->angle);
+	s->calculatePosition(s->position, s->velocity, s->acceleration, 1);
+        s->calculateVelocity(s->velocity, s->acceleration, 1);
+        s->calculateAcceleration(s->force, s->mass);
+
+	std::cout 
+		  << "Physics : \nX: " << s->position.x << " Y: " << s->position.y  
+		  << "\nForce X: "    << s->force.x << " " << " Y: " << s->force.y 
+		  << "\nVelocity X: " << s->velocity.x << " Y: " << s->velocity.y 
+	  	  << "\nAceceleration X:" << s->acceleration.x << " Y: " << s->acceleration.y  
+		  << "\nAngle: " << s->angle << "\nTorque : " << s->torque << "\nRotation Inertia : " << s->rotational_inertia
+		  << "\nAngular Velocity : " << s->angularVelocity << "\nAgularAcceleration : "<< s->angularAcceleration  << 
+	std::endl;
+
+
+        //r++;
+        r = 0;
+        if(r > 360)
+            r = 0;
+
+        // render
+        // ------
+	//std::cout << "New Updating Camera " << std::endl;
+	//glm::mat4 view_matrix = glm::lookAt(vec3(0 + x_cam, 0 + y_cam, 0), vec3(0, 1, 0), vec3(0, -1, 0));
+    	//ResourceManager::GetShader("sprite")->SetMatrix4("projection", o_cam->return_matrix());
+	//ResourceManager::GetShader("sprite")->SetMatrix4("projection", view_matrix);
+
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+	
+
+    //		glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, false, glm::value_ptr(matrix));
+	//if(x_cam > 100){
+    		ResourceManager::GetShader("sprite")->Use().SetInteger("sprite", 0);
+		//glm::mat4 new_cam = glm::ortho(0, 400, 600, 0);
+		ResourceManager::GetShader("sprite")->SetMatrix4("projection", o_cam->return_matrix());
+       // 	std::cout << "NEW!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+	//}	
+        // bind textures on corresponding texture units
+	//
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("face"),		//texture key 
+								"Face",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(200.0f, 100.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_1"),		//texture key 
+								"Planet_1",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(10200.0f, 100.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_2"),		//texture key 
+								"Planet_2",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(1200.0f, 1000.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_3"),		//texture key 
+								"Planet_3",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(-1200.0f, -100.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_4"),		//texture key 
+								"Planet_4",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(-12000.0f, 10.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_5"),		//texture key 
+								"Planet_5",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(100.0f, 10000.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+			
+			Renderer->DrawSprite(ResourceManager::GetTexture("walk"),		//texture key 
+								"Walk",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(100, 100),	//Origin 
+								glm::vec2(50, 37), 	//Image size
+								0.0f);
+/*
+			Renderer->DrawSprite(ResourceManager::GetTexture("exit"), 
+					"Exit",
+								false,
+								1, 1, 0,
+								glm::vec2(100.0f, 520.0f), 
+								glm::vec2(200, 100), 
+								0.0f);
+
+	
+			Renderer->DrawSprite(ResourceManager::GetTexture("player"),		//texture key 
+								true,
+								glm::vec2(x, y),	                    //Origin 
+        				                        glm::vec2(128, 192), 	                //Image size
+                                				r,                                      //rotation
+                                				glm::vec3(1.0f, 1.0f, 1.0f)             //colour
+								);
+			*/	
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("player"),		//texture key 
+					"Red",
+								true,
+								false,
+								3, 4, 0.33,
+								glm::vec2(s->position.x, s->position.y),	                    //Origin 
+        				                        glm::vec2(95, 128), 	                //Image size
+                                				s->angle,                                      //rotation
+                                				glm::vec3(1.0f, 1.0f, 1.0f)             //colour
+								);
+			
+				
+			Renderer->DrawSprite(ResourceManager::GetTexture("sky"),		//texture key 
+					"Tori",
+								true,
+								true,
+								4, 4, 0.25,
+								glm::vec2(100, 300),	                    //Origin 
+        				                        glm::vec2(128, 192), 	                //Image size
+                                				r,                                      //rotation
+                                				glm::vec3(1.0f, 1.0f, 1.0f)             //colour
+								);
+	
+	
+
+	
+	// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // -------------------------------------------------------------------------------
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+
+    // optional: de-allocate all resources once they've outlived their purpose:
+    // ------------------------------------------------------------------------
+	Renderer->~SpriteRenderer();
+	//delete Effects;
+    // glfw: terminate, clearing all previously allocated GLFW resources.
+    // ------------------------------------------------------------------
+    glfwTerminate();
+    return 0;
+}
+
+
+//Intialize all opengl glad and glfw 
+GLFWwindow* create_openGL_window(int opengl_major_ver, int opengl_minor_ver, const char* win_title, int screen_width, int screen_height)
+{
+	
+
+
+    // glfw: initialize and configure
+    // ------------------------------
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, opengl_major_ver);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, opengl_minor_ver);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    #ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #endif
+
+    // glfw window creation
+    // --------------------
+
+    GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, win_title, NULL, NULL);
+    if (window == NULL)
+    {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+//        return -1;
+        //glfwSetWindowShouldClose(window, true);
+
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    // glad: load all OpenGL function pointers
+    // ---------------------------------------
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+//        return -1;
+        //glfwSetWindowShouldClose(window, true);
+
+    }
+
+    return window;
+
+}
+
+
+
+// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
+// ---------------------------------------------------------------------------------------------------------
+void processInput(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	    glfwSetWindowShouldClose(window, true);
+
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
+//    	s->setVelocity(1, 0);	
+	s->force.x += 10000.0f;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+    	//s->setVelocity(-1, 0);
+	s->force.x -= 1000000.0f;
+    }
+    else
+    	//s->velocity.x = 0;
+	s->force.x = 0.0f;
+
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+    	//s->setVelocity(0, -1);
+	s->force.y -= 10000.0f;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+    	//s->setVelocity(0, 1);
+	s->force.y += 1000000.0f;
+    }
+    else
+    	//s->velocity.y = 0;
+	s->force.y = 0.0f;
+
+
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    {
+    	//s->setVelocity(0, -1);
+	s->torque += 1000000.0f;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+    	//s->setVelocity(0, 1);
+	s->torque -= 1000000.0f;
+    }
+    else
+    	//s->velocity.y = 0;
+	s->torque = 0.0f;
+
+
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+	s->force.x = 50000000;
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS){
+	s->force.x = 25000000;
+	s->torque = 629100000;
+    }
+    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS){
+	s->torque = 0;
+	s->force.x = 0;
+	s->force.y = 0;
+    }
+
+
+
+
+
+
+
+
+
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    {
+	    x_cam +=10;
+	    o_cam->SetPosition(glm::vec3(x_cam, y_cam, z_cam));
+            //std::cout << "X cam : " << x_cam  << std::endl;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    {
+	    x_cam -=10;
+	    o_cam->SetPosition(glm::vec3(x_cam, y_cam, z_cam));
+            //std::cout << "X cam : " << x_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    {
+	    y_cam -=10;
+	    o_cam->SetPosition(glm::vec3(x_cam, y_cam, z_cam));
+            //std::cout << "Y cam : " << y_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    {
+	    y_cam +=10;
+	    o_cam->SetPosition(glm::vec3(x_cam, y_cam, z_cam));
+            //std::cout << "Y cam : " << y_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    {
+	    r_cam +=0.01;
+	    o_cam->SetRotation(r_cam);
+            //std::cout << "R cam : " << r_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    {
+	    r_cam -=0.01;
+	    o_cam->SetRotation(r_cam);
+            //std::cout << "R cam : " << r_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+    {
+	    z_scale.x += 0.01;
+	    z_scale.y += 0.01;
+	    o_cam->SetScale(z_scale);
+            std::cout << "Z-x cam : " << z_scale.x << std::endl;
+            std::cout << "Z-y cam : " << z_scale.y << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+    {
+	    z_scale.x -= 0.01;
+	    z_scale.y -= 0.01;
+	    o_cam->SetScale(z_scale);
+            //std::cout << "Z-x cam : " << z_scale.x << std::endl;
+            //std::cout << "Z-y cam : " << z_scale.y << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    {
+    	simulate();
+    }
+}
+
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    // make sure the viewport matches the new window dimensions; note that width and 
+    // height will be significantly larger than specified on retina displays.
+    glViewport(0, 0, width, height);
+}
+
+
