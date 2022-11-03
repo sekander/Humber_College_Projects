@@ -1,0 +1,31 @@
+﻿  Actor.cpp
+  Box.cpp
+  CameraActor.cpp
+  Capsule.cpp
+  Cylinder.cpp
+  Debug.cpp
+  EMath.cpp
+  LightActor.cpp
+  MaterialComponent.cpp
+  MeshComponent.cpp
+C:\Users\sekan\Documents\School\PhysicsThree22StartingCode\ComponentFramework\tiny_obj_loader.h(1665,27): warning C4018: '<': signed/unsigned mismatch
+  QMath.cpp
+  Scene0.cpp
+  Scene2.cpp
+  SceneManager.cpp
+  Main.cpp
+  MMath.cpp
+  ShaderComponent.cpp
+  Shape.cpp
+  ShapeComponent.cpp
+  Sphere.cpp
+  Generating Code...
+  Compiling...
+  Timer.cpp
+  tinyxml2.cpp
+  TransformComponent.cpp
+  VMath.cpp
+  Window.cpp
+  XMLAssetManager.cpp
+  Generating Code...
+  ComponentFramework.vcxproj -> C:\Users\sekan\Documents\School\PhysicsThree22StartingCode\Debug\ComponentFramework.exe
