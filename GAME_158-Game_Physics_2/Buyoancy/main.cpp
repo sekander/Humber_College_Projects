@@ -320,7 +320,7 @@ int main()
 		    p_body_3->force.y -= 0.01f;
 	    }
 	    
-	    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+	    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
 	    {
 	    	p_body_2->velocity.x = 0.0f;
 	    	p_body_2->velocity.y = 0.0f;

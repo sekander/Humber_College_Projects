@@ -101,8 +101,8 @@ int main()
     circle2.setFillColor(sf::Color(200, 110, 50));
 
     Sphere circle_3;
-    circle_3.position.x = 150.0f;
-    circle_3.position.y = 50.0f;
+    circle_3.position.x = 50.0f;
+    circle_3.position.y = 80.0f;
     circle_3.radius = 25.0f;
 
     sf::CircleShape circle3(circle_3.radius);
@@ -167,8 +167,8 @@ int main()
     p_body_3 = new Physics(position, velocity, acceleration, force, torque, mass, angle, 
 		   angularVelocity, angularAcceleration, rotational_inertia);
 
-    p_body_3->position.x = 500.0f;
-    p_body_3->position.y = 450.0f;
+    p_body_3->position.x = 100.0f;
+    p_body_3->position.y = 250.0f;
     p_body_3->velocity.x = 0.0f;
     p_body_3->velocity.y = 0.0f;
     p_body_3->acceleration.x = 0.0f;
@@ -282,7 +282,7 @@ int main()
 		    p_body_3->force.y -= 0.01f;
 	    }
 	    
-	    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+	    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space)
 	    {
 	    	p_body_2->velocity.x = 0.0f;
 	    	p_body_2->velocity.y = 0.0f;

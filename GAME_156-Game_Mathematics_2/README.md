@@ -7,6 +7,8 @@ quaternions.
 Assignment - 1
 	|-> Represent 2D and 3D vectors and mainpulate the value using custom math library
 
+https://github.com/github/Humber_College_Projects/GAME_156-Game_Mathematics_2/Screenshot_2022-11-03_18-17-14.-Assignment_1.png 
+
 Assignment - 2
 	|-> Represent a ray and calculate the intersection point of a ray and line, and ray and plane.
 
