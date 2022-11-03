@@ -1,0 +1,138 @@
+#ifndef PHYSICS_H
+#define PHYSICS_H
+
+//#include <math.h>
+#include "nahid_math.h"
+
+
+/*
+ * Nahid Sekander
+ * n01001831
+ * 03/09/22
+ * */
+
+
+class Physics
+{
+    public:
+
+	
+        Physics(vec_3 position, vec_3 velocity, vec_3 acceleration, vec_3 force,
+        long torque, long mass ,double angle, double angularVelocity, double angularAcceleration, 
+        //int torque, int mass ,float angle, float angularVelocity, float angularAcceleration, 
+	double rotational_inertia)
+	//int rotational_inertia)
+        {
+            position = position;
+            velocity = velocity;
+            acceleration = acceleration;
+            force = force;
+            torque = torque;
+            mass = mass;
+            angle = angle;
+            angularVelocity = angularVelocity;
+            angularAcceleration = angularAcceleration;
+	    rotational_inertia = rotational_inertia;
+        }
+
+        ~Physics(){};
+
+	//Calculate Position based on given velocity and acceleration
+        void calculatePosition(vec_3 position, vec_3 velocity, vec_3 acceleration, int time)
+        {
+            position.x += velocity.x*time + (acceleration.x/2) * (time*time);
+            position.y += velocity.y*time + (acceleration.y/2) * (time*time);
+            setPosition(position.x,position.y);
+
+        }
+
+	//Calculate Linear Velocity of Physic object
+        void calculateVelocity(vec_3 velocity, vec_3 acceleration, int time)
+        {
+            velocity.x += acceleration.x*time;
+            velocity.y += acceleration.y*time;
+            setVelocity(velocity.x, velocity.y);
+
+        }
+
+	//Calculate Linear Acceleration of Physic object
+        void calculateAcceleration(vec_3 force, int mass)
+        {
+            acceleration.x = force.x/mass;
+            acceleration.y = force.y/mass;
+        }
+
+	//Calcualate angle displacment of Physic object
+        void calculateAngle(float angularVelocity, float angularAcceleration, int time)
+        {
+            angle += angularVelocity*time + (angularAcceleration/2) * (time*time);
+        }
+
+	//Calculate angular velocity of Physic object
+        void calculateAngularVelocity(float angularAcceleration, int time)
+        {
+            angularVelocity += angularAcceleration*time;
+        }
+
+	//Calculate angular acceleration of Physic object
+	void calculateAngularAcceleration(){
+		angularAcceleration = torque / rotational_inertia;
+		//angularAcceleration = torque / mass;
+	}
+
+	//Calculate force thrust acted up Physic object 
+        void calculateForce(vec_3 force, float theta)
+        {
+            force.x = (force.x * cos(theta)) - (force.y * sin(theta));
+            force.y = (force.x * sin(theta)) + (force.y * cos(theta));
+
+            setForce(force.x, force.y);
+        }
+
+	//Set Position, Velocity, and Force of the Physic object
+        void setPosition(float x, float y){ position.x = x; position.y = y;}
+        void setVelocity(float x, float y){ velocity.x = x; velocity.y = y;}
+        void setAcceleration(float x, float y){ acceleration.x = x; acceleration.y = y;}
+	void setForce(float x, float y){ force.x = x; force.y = y;}
+
+	vec_3 getPosition(){return position;}
+	vec_3 getVelocity(){return velocity;}
+	vec_3 getAcceleration(){return acceleration;}
+	vec_3 getForce(){return force;}
+
+
+        
+	//int mass;
+	long mass;
+        //int torque;
+        long torque;
+	//int rotational_inertia;
+	double rotational_inertia;
+        
+	
+	//float angularAcceleration;
+	double angularAcceleration;
+        //float angle;
+        double angle;
+        //float angularVelocity;
+        double angularVelocity;
+
+	vec_3 position;
+	vec_3 velocity;
+	vec_3 acceleration;
+	vec_3 force;
+
+    protected:
+
+
+	
+    private:
+	//vec_3 start_pos;
+
+	//Public Member variables 
+
+
+
+};
+
+#endif // PHYSICS_H

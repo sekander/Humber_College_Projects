@@ -1,0 +1,628 @@
+#include <glad/glad.h>
+#include <glm/ext/matrix_transform.hpp>
+
+#include <glm/ext/vector_float3.hpp>
+#include <iostream>
+
+#include "../include/game.h"
+
+#include "../include/resource_manager.h"
+#include "../include/sprite_renderer.h"
+
+#include "../src/Lines.cpp"
+
+
+SpriteRenderer    *Renderer;
+edge wall;
+edge roof;
+edge ground;
+
+    float angle;
+    float x_line;
+    float y_line;
+
+
+bounding_box player;
+bounding_box B_player;
+
+Game::Game(){}
+
+void Game::Run() 
+{
+    	// glfw: initialize and configure
+    // ------------------------------
+    GLFWwindow* window = create_openGL_window(3, 3, "Nahid's open_gl Window", SCR_WIDTH, SCR_HEIGHT);
+    // load shaders
+    ResourceManager::LoadShader("resources/shaders/sprite.vs", "resources/shaders/sprite.fs", nullptr, "sprite");
+    // configure shaders
+    //glm::mat4 projection = glm::ortho(0.0f, SCR_WIDTH, SCR_HEIGHT, 0.0f, -1.0f, 1.0f);
+    //glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(SCR_WIDTH), static_cast<float>(SCR_HEIGHT), 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = o_cam->return_matrix();
+    ResourceManager::GetShader("sprite")->Use().SetInteger("sprite", 0);
+    ResourceManager::GetShader("sprite")->SetMatrix4("projection", projection);
+//    ResourceManager::GetShader("sprite")->SetMatrix4("projection", o_cam->return_matrix());
+
+    ResourceManager::LoadTexture("resources/images/tori.png", true, "sky");
+    ResourceManager::LoadTexture("resources/images/red.png", true, "player");
+    ResourceManager::LoadTexture("resources/images/awesomeface.png", true, "face");
+ //   ResourceManager::LoadTexture("resources/images/planet_1.png", true, "planet_1");
+    ResourceManager::LoadTexture("resources/images/face-1.png", true, "planet_1");
+    ResourceManager::LoadTexture("resources/images/face-2.png", true, "planet_2");
+    ResourceManager::LoadTexture("resources/images/face-3.png", true, "planet_3");
+    ResourceManager::LoadTexture("resources/images/face-4.png", true, "planet_4");
+    ResourceManager::LoadTexture("resources/images/face-5.png", true, "planet_5");
+    ResourceManager::LoadTexture("resources/images/walk.png", true, "walk");
+//    ResourceManager::LoadTexture("resources/images/planet-2.jpeg", true, "planet_3");
+ //   ResourceManager::LoadTexture("resources/images/planet-1.jpg", true, "planet_4");
+//    ResourceManager::LoadTexture("resources/images/Exit_button.png", true, "exit");
+
+    //set renderedr
+    Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+//Box2d Code
+
+    vec_3 position;
+    vec_3 velocity;
+    vec_3 force;
+    vec_3 acceleration;
+
+	
+   
+
+    int mass;
+    int torque;
+    float angularAcceleration;
+    float angularVelocity;
+    //float angle;
+    long rotational_inertia;
+
+    s = new Physics(position, velocity, acceleration, force, torque, mass, angle, angularVelocity, angularAcceleration, rotational_inertia);
+    //s->setPosition(0.0f, 0.0f);
+    s->position.x = 20.0f;
+    s->position.y = 0.0f;
+    //s->setVelocity(0.0f, 0.0f);
+    s->velocity.x = 0.0f;
+    s->velocity.y = 0.0f;
+    //s->setForce(0.0f, 0.0f);
+    s->acceleration.x = 0.0f;
+    s->acceleration.y =0.0f;
+    s->force.x = 0;
+    s->force.y = 0.0f;
+    s->torque = 10;
+    s->torque = 0;
+    //s->mass = 100000;
+    s->mass = 10000;
+    s->angle = 0.0f;
+    s->angularAcceleration = 0.0f;
+    s->angularVelocity = 0.0f;
+    //s->rotational_inertia = 1;
+    s->rotational_inertia = 26700000000;
+
+
+
+    b = new Physics(position, velocity, acceleration, force, torque, mass, angle, angularVelocity, angularAcceleration, rotational_inertia);
+    //s->setPosition(0.0f, 0.0f);
+    b->position.x = 100.0f;
+    b->position.y = 10.0f;
+    //s->setVelocity(0.0f, 0.0f);
+    b->velocity.x = 0.0f;
+    b->velocity.y = 0.0f;
+    //s->setForce(0.0f, 0.0f);
+    b->acceleration.x = 0.0f;
+    b->acceleration.y =0.0f;
+    b->force.x = 0;
+    b->force.y = 0.0f;
+    b->torque = 10;
+    b->torque = 0;
+    //s->mass = 100000;
+    b->mass = 10000;
+    b->angle = 0.0f;
+    b->angularAcceleration = 0.0f;
+    b->angularVelocity = 0.0f;
+    //s->rotational_inertia = 1;
+    b->rotational_inertia = 26700000000;
+
+
+
+
+
+
+    player.origin.x = s->position.x - 16.0f;
+    player.origin.y = s->position.y;
+    player.bottom_right.x = s->position.x + 50.0f;
+    player.bottom_right.y = 0.0f;
+    player.top_right.x = player.bottom_right.x;
+    player.top_right.y = player.origin.y + 50.0f;
+    player.top_left.x = player.origin.x;
+    player.top_left.y = player.top_right.y; 
+	
+
+    B_player.origin.x = b->position.x - 16.0f;
+    B_player.origin.y = b->position.y;
+    B_player.bottom_right.x = b->position.x + 50.0f;
+    B_player.bottom_right.y = 0.0f;
+    B_player.top_right.x = B_player.bottom_right.x;
+    B_player.top_right.y = B_player.origin.y + 50.0f;
+    B_player.top_left.x = B_player.origin.x;
+    B_player.top_left.y = B_player.top_right.y; 
+
+
+   wall.start = vec_3(0.0f, -0.5f); 
+   wall.end   = vec_3(0.0f, 20000.0f);
+
+   roof.start = vec_3(-0.5f, 0.0f);
+   roof.end   = vec_3(20000.0f, 0.0f);
+
+    x = 0.0f;
+    y = 0.0f;
+
+    float i = 0;
+
+    float x_s = 500.0f ;
+    float y_s = 0.0f ;
+
+    float x_e = 1000.0f ;
+    float y_e = 5000.0f ;
+
+    z_scale.x = 0;
+    z_scale.y = 0;
+
+    //Line debug(vec_3(x_s, y_s), vec_3(x_e, y_e));
+    Line debug(wall.start, wall.end);
+    Line debug_roof(roof.start, roof.end);
+
+    Line side_1(player.origin, player.bottom_right);
+    Line side_2(player.bottom_right, player.top_right);
+    Line side_3(player.top_right, player.top_left);
+    Line side_4(player.top_left, player.origin);
+
+    Line B_side_1(player.origin, player.bottom_right);
+    Line B_side_2(player.bottom_right, player.top_right);
+    Line B_side_3(player.top_right, player.top_left);
+    Line B_side_4(player.top_left, player.origin);
+
+
+
+
+
+    Line test(vec_3(0.0f, 0.0f), vec_3(100.0f, 100.0f));
+
+    // render loop
+    // -----------
+    while (!glfwWindowShouldClose(window))
+    {
+
+	//x_s = x_s*cos(angle) - y_s*sin(angle);
+        //y_s = y_s*cos(angle) + x_s*sin(angle);
+
+	//x_e = x_e*cos(angle) - y_e*sin(angle);
+        //y_e = y_e*cos(angle) + x_e*sin(angle);
+
+    	//Line debug(vec_3(x_s, y_s, 0.0f), vec_3(x_e, y_e, 0.0f));
+    	nb_frames++;	    
+
+        // per-frame time logic
+        // --------------------
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+
+
+
+        // input
+        // -----
+        processInput(window);
+
+//	x_cam = s->position.x;	
+	
+	//o_cam->SetPosition(glm::vec3(s->position.x - 500, s->position.y - 500, 0));
+	o_cam->SetPosition(glm::vec3( x_cam, y_cam, 0));
+
+
+
+	s->calculateAngularAcceleration();
+	s->calculateAngularVelocity(s->angularAcceleration, 1 );
+	s->calculateAngle(s->angularVelocity, s->angularAcceleration, 1 );
+	s->calculateForce(s->force, s->angle);
+	s->calculatePosition(s->position, s->velocity, s->acceleration, 1);
+        s->calculateVelocity(s->velocity, s->acceleration, 1);
+        s->calculateAcceleration(s->force, s->mass);
+
+	std::cout 
+		  << "Physics : \nX: " << s->position.x << " Y: " << s->position.y  
+		  << "\nForce X: "    << s->force.x << " " << " Y: " << s->force.y 
+		  << "\nVelocity X: " << s->velocity.x << " Y: " << s->velocity.y 
+	  	  << "\nAceceleration X:" << s->acceleration.x << " Y: " << s->acceleration.y  
+		  << "\nAngle: " << s->angle << "\nTorque : " << s->torque << "\nRotation Inertia : " << s->rotational_inertia
+		  << "\nAngular Velocity : " << s->angularVelocity << "\nAgularAcceleration : "<< s->angularAcceleration  << 
+	std::endl;
+
+
+        //r++;
+        r = 0;
+        if(r > 360)
+            r = 0;
+
+        // render
+        // ------
+	//std::cout << "New Updating Camera " << std::endl;
+	//glm::mat4 view_matrix = glm::lookAt(vec3(0 + x_cam, 0 + y_cam, 0), vec3(0, 1, 0), vec3(0, -1, 0));
+    	//ResourceManager::GetShader("sprite")->SetMatrix4("projection", o_cam->return_matrix());
+	//ResourceManager::GetShader("sprite")->SetMatrix4("projection", view_matrix);
+
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+	
+
+    //		glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, false, glm::value_ptr(matrix));
+	//if(x_cam > 100){
+    		ResourceManager::GetShader("sprite")->Use().SetInteger("sprite", 0);
+		//glm::mat4 new_cam = glm::ortho(0, 400, 600, 0);
+		ResourceManager::GetShader("sprite")->SetMatrix4("projection", o_cam->return_matrix());
+       // 	std::cout << "NEW!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+	//}	
+        // bind textures on corresponding texture units
+	//
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("face"),		//texture key 
+								"Face",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(200.0f, 100.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_1"),		//texture key 
+								"Planet_1",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(10200.0f, 100.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_2"),		//texture key 
+								"Planet_2",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(1200.0f, 1000.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_3"),		//texture key 
+								"Planet_3",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(-1200.0f, -100.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_4"),		//texture key 
+								"Planet_4",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(-12000.0f, 10.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("planet_5"),		//texture key 
+								"Planet_5",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(100.0f, 10000.0f),	//Origin 
+								glm::vec2(512, 512), 	//Image size
+								0.0f);
+			
+			Renderer->DrawSprite(ResourceManager::GetTexture("walk"),		//texture key 
+								"Walk",
+								false,
+								false,
+								1, 1, 0,
+								glm::vec2(100, 100),	//Origin 
+								glm::vec2(50, 37), 	//Image size
+								0.0f);
+/*
+			Renderer->DrawSprite(ResourceManager::GetTexture("exit"), 
+					"Exit",
+								false,
+								1, 1, 0,
+								glm::vec2(100.0f, 520.0f), 
+								glm::vec2(200, 100), 
+								0.0f);
+
+	
+			Renderer->DrawSprite(ResourceManager::GetTexture("player"),		//texture key 
+								true,
+								glm::vec2(x, y),	                    //Origin 
+        				                        glm::vec2(128, 192), 	                //Image size
+                                				r,                                      //rotation
+                                				glm::vec3(1.0f, 1.0f, 1.0f)             //colour
+								);
+			*/	
+
+			Renderer->DrawSprite(ResourceManager::GetTexture("player"),		//texture key 
+					"Red",
+								true,
+								false,
+								3, 4, 0.33,
+								glm::vec2(s->position.x, s->position.y),	                    //Origin 
+        				                        glm::vec2(95, 128), 	                //Image size
+                                				s->angle,                                      //rotation
+                                				glm::vec3(1.0f, 1.0f, 1.0f)             //colour
+								);
+			
+				
+			Renderer->DrawSprite(ResourceManager::GetTexture("sky"),		//texture key 
+					"Tori",
+								true,
+								true,
+								4, 4, 0.25,
+								glm::vec2(100, 300),	                    //Origin 
+        				                        glm::vec2(128, 192), 	                //Image size
+                                				r,                                      //rotation
+                                				glm::vec3(1.0f, 1.0f, 1.0f)             //colour
+								);
+
+			debug.setColor(vec3(0.5f, 1.0f, 0.15f));
+			debug_roof.setColor(vec3(0.2f, 0.0f, 0.7f));
+
+			
+			debug.setMVP(o_cam->return_matrix());
+			debug.draw();
+
+			debug_roof.setMVP(o_cam->return_matrix());
+			debug_roof.draw();
+
+			side_1.setMVP(o_cam->return_matrix());
+			side_2.setMVP(o_cam->return_matrix());
+			side_3.setMVP(o_cam->return_matrix());
+			side_4.setMVP(o_cam->return_matrix());
+
+			B_side_1.setMVP(o_cam->return_matrix());
+			B_side_2.setMVP(o_cam->return_matrix());
+			B_side_3.setMVP(o_cam->return_matrix());
+			B_side_4.setMVP(o_cam->return_matrix());
+
+			test.setMVP(o_cam->return_matrix());
+			test.setColor(vec3(0.9f, 0.0f, 0.4f));
+			test.draw(0.0f, 0.0f, s->angle, 2.0f);
+
+			side_1.draw(s->position.x, s->position.y, 0.0f, 1.0f);
+			side_2.draw(s->position.x, s->position.y, 0.0f, 1.0f);
+			side_3.draw(s->position.x, s->position.y, 0.0f, 1.0f);
+			side_4.draw(s->position.x, s->position.y, 0.0f, 1.0f);
+
+			B_side_1.draw(b->position.x, b->position.y, 0.0f, 1.0f);
+			B_side_2.draw(b->position.x, b->position.y, 0.0f, 1.0f);
+			B_side_3.draw(b->position.x, b->position.y, 0.0f, 1.0f);
+			B_side_4.draw(b->position.x, b->position.y, 0.0f, 1.0f);
+
+
+			checkLeftWallCollision(*s, wall);	
+			checkRoofCollision(*s, roof);
+	
+
+			SphereSphereCollisionResponse(*s, *b, 1.01f);
+
+			//SphereStaticSphereCollisionResponse(*s, *b);
+
+
+
+
+	// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // -------------------------------------------------------------------------------
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+
+    // optional: de-allocate all resources once they've outlived their purpose:
+    // ------------------------------------------------------------------------
+	Renderer->~SpriteRenderer();
+	//delete Effects;
+    // glfw: terminate, clearing all previously allocated GLFW resources.
+    // ------------------------------------------------------------------
+    glfwTerminate();
+//    return 0;
+}
+
+
+//Intialize all opengl glad and glfw 
+//
+GLFWwindow* Game::create_openGL_window(int opengl_major_ver, int opengl_minor_ver, const char* win_title, int screen_width, int screen_height)
+//GLFWwindow* create_openGL_window(int opengl_major_ver, int opengl_minor_ver, const char* win_title, int screen_width, int screen_height)
+{
+	
+
+
+    // glfw: initialize and configure
+    // ------------------------------
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, opengl_major_ver);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, opengl_minor_ver);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    #ifdef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    #endif
+
+    // glfw window creation
+    // --------------------
+
+    GLFWwindow* window = glfwCreateWindow(screen_width, screen_height, win_title, NULL, NULL);
+    if (window == NULL)
+    {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+//        return -1;
+        //glfwSetWindowShouldClose(window, true);
+
+    }
+    glfwMakeContextCurrent(window);
+    //glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    // glad: load all OpenGL function pointers
+    // ---------------------------------------
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+//        return -1;
+        glfwSetWindowShouldClose(window, true);
+
+    }
+
+    return window;
+
+}
+
+
+
+// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
+// ---------------------------------------------------------------------------------------------------------
+void Game::processInput(GLFWwindow *window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	    glfwSetWindowShouldClose(window, true);
+
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
+//    	s->setVelocity(1, 0);	
+	s->force.x += 10.0f;
+	//s->setForce(100000.0f, 0.0f);
+    }
+    else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+    	//s->setVelocity(-1, 0);
+	s->force.x -= 10.0f;
+	//s->setForce(-100000.0f, 0.0f);
+    }
+    else
+    	//s->velocity.x = 0;
+	s->force.x = 0.0f;
+	//s->setForce(0.0f, 0.0f);
+
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+    	//s->setVelocity(0, -1);
+	s->force.y -= 10.0f;
+	//s->setForce(0.0f, 10000.0f);
+    }
+    else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+    	//s->setVelocity(0, 1);
+	s->force.y += 10.0f;
+	//s->setForce(0.0f, -10000.0f);
+    }
+    else
+    	//s->velocity.y = 0;
+	s->force.y = 0.0f;
+	//s->setForce(0.0f, 0.0f);
+
+
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+    {
+    	//s->setVelocity(0, -1);
+	s->torque += 10.0f;
+    }
+    else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+    	//s->setVelocity(0, 1);
+	s->torque -= 10.0f;
+    }
+    else
+    	//s->velocity.y = 0;
+	s->torque = 0.0f;
+
+    if(glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+	    angle = 0.01f;
+    else if(glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
+	    angle = -0.01f;
+    else
+	    angle = 0.0f;
+
+
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    {
+	    x_cam +=10;
+	    o_cam->SetPosition(glm::vec3(x_cam, y_cam, z_cam));
+            //std::cout << "X cam : " << x_cam  << std::endl;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    {
+	    x_cam -=10;
+	    o_cam->SetPosition(glm::vec3(x_cam, y_cam, z_cam));
+            //std::cout << "X cam : " << x_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    {
+	    y_cam -=10;
+	    o_cam->SetPosition(glm::vec3(x_cam, y_cam, z_cam));
+            //std::cout << "Y cam : " << y_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    {
+	    y_cam +=10;
+	    o_cam->SetPosition(glm::vec3(x_cam, y_cam, z_cam));
+            //std::cout << "Y cam : " << y_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    {
+	    r_cam +=0.01;
+	    o_cam->SetRotation(r_cam);
+            //std::cout << "R cam : " << r_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+    
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    {
+	    r_cam -=0.01;
+	    o_cam->SetRotation(r_cam);
+            //std::cout << "R cam : " << r_cam  << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
+    {
+	    z_scale.x += 0.01;
+	    z_scale.y += 0.01;
+	    o_cam->SetScale(z_scale);
+            std::cout << "Z-x cam : " << z_scale.x << std::endl;
+            std::cout << "Z-y cam : " << z_scale.y << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
+    {
+	    z_scale.x -= 0.01;
+	    z_scale.y -= 0.01;
+	    o_cam->SetScale(z_scale);
+            //std::cout << "Z-x cam : " << z_scale.x << std::endl;
+            //std::cout << "Z-y cam : " << z_scale.y << std::endl;
+    	//ResourceManager::GetShader("sprite").SetMatrix4("projection", o_cam->return_matrix());
+    }
+}
+
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
+void Game::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    // make sure the viewport matches the new window dimensions; note that width and 
+    // height will be significantly larger than specified on retina displays.
+    glViewport(0, 0, width, height);
+}
+
+

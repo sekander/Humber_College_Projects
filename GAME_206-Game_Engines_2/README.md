@@ -1,1 +1,7 @@
 Game Engines 2 - Advanced Unreal
+
+Creating 3D game prototypes using unreal to simulate collisons, animation,
+basic artifiial intelligence and setting up application for multiplayer connectivity
+
+Assignment_1
+
