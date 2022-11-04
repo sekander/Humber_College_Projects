@@ -4,13 +4,13 @@ Further expanding 3D graphics through the use of OpenGL focusing on reueusable c
 
 
 
-Scene 0
+<h2>Scene 0</h2>
 
 <img src="images/FINAL-ComponentFramework-Scene0.png" width="50%"></img> 
 
 
 
-Scene 1
+<h2>Scene 1</h2>
 
 <img src="images/FINAL-ComponentFramework-Scene1.png" width="50%"></img> 
 
