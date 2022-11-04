@@ -1,3 +1,5 @@
+<h1>Graphics Programming</h1>
+
 Scene1 
 
 (10/15) Create a minimum of two lights in Scene1.cpp based on the Phong Shading model. This will require you to create two light positions in Scene1. Both of those positions need to be sent to the GPU as uniform variables. The phongVert.glsl and PhongFrag.glsl files need to be copied given new names. Of course the code inside those shaders will have to be modified to reflect the multiple light positions. I recommend using two different colours of lights postioned away from each other.
