@@ -9,14 +9,14 @@ Extra: Store and pass the two light positions as arrays. The vertex shader will 
 Extra: Store and pass the muliple light positions as arrays. You will need to also pass the length of the array
 Extra: Pass Diffuse and Spectular colour data from the CPU to the GPU. Using C structs? Ask me. 
 
-<img src="FINAL-OpengGLFramework-Scene1.png" width="50%"></img> 
+<img src="images/FINAL-OpengGLFramework-Scene1.png" width="50%"></img> 
 
 
 Scene2
 
 In this assignment I would like you to place two eyes in the into the Skull.obj. The two eyes need to be parented to the skull such that when the head rotates the eyes move as well. You will need to implement the Trackball code to do the rotations or just use keyboard events. Be sure to scale the eyes to a reasonable size and translate them into the correct position.
 
-<img src="FINAL-OpengGLFramework-Scene2.png" width="50%"></img> 
+<img src="images/FINAL-OpengGLFramework-Scene2.png" width="50%"></img> 
 
 Scene3
 
@@ -28,7 +28,7 @@ Wait! A better plan is to look at this web page skybox
 
 In order to see if you have build the sky box correctly, you will need to contol the camera by keyboard or mouse. I suggeast using the mouse. You can get the rotation matrix out of the trackball with getMatrix4(). You should use it as the cameraRotationMatrix instead of the Camera's viewMatrix.
 
-<img src="FINAL-OpengGLFramework-Scene3.png" width="50%"></img> 
+<img src="images/FINAL-OpengGLFramework-Scene3.png" width="50%"></img> 
 
 
 Scene4
@@ -38,7 +38,7 @@ Build a sphere inside a skybox. Following the ideas found in the learnOpenGL web
 
 Your Scene should look something like this, with just reflection - the skull head does not need to move.
 
-<img src="FINAL-OpengGLFramework-Scene4.png" width="50%"></img> 
+<img src="images/FINAL-OpengGLFramework-Scene4.png" width="50%"></img> 
 
 
 Scene5
@@ -53,5 +53,5 @@ I used this system "art" math here to generate a mixing function on the surface 
 This is just a code sample I got from an old out of date, early book on shaders. Google "Orange_Book_-_OpenGL_Shading_Language_2nd_Edition.pdf"
 There are endless things you can create. The section on turbulence is fun - remember, it is way out of date. 
 
-<img src="FINAL-OpengGLFramework-Scene5.png" width="50%"></img> 
+<img src="images/FINAL-OpengGLFramework-Scene5.png" width="50%"></img> 
 
