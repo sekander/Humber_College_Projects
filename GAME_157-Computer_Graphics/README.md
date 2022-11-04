@@ -7,11 +7,14 @@ Extra: Store and pass the two light positions as arrays. The vertex shader will 
 Extra: Store and pass the muliple light positions as arrays. You will need to also pass the length of the array
 Extra: Pass Diffuse and Spectular colour data from the CPU to the GPU. Using C structs? Ask me. 
 
+<img src="FINAL-OpengGLFramework-Scene1.png" width="15%"></img> 
+
 
 Scene2
 
 In this assignment I would like you to place two eyes in the into the Skull.obj. The two eyes need to be parented to the skull such that when the head rotates the eyes move as well. You will need to implement the Trackball code to do the rotations or just use keyboard events. Be sure to scale the eyes to a reasonable size and translate them into the correct position.
 
+<img src="FINAL-OpengGLFramework-Scene2.png" width="15%"></img> 
 
 Scene3
 
@@ -23,6 +26,8 @@ Wait! A better plan is to look at this web page skybox
 
 In order to see if you have build the sky box correctly, you will need to contol the camera by keyboard or mouse. I suggeast using the mouse. You can get the rotation matrix out of the trackball with getMatrix4(). You should use it as the cameraRotationMatrix instead of the Camera's viewMatrix.
 
+<img src="FINAL-OpengGLFramework-Scene3.png" width="15%"></img> 
+
 
 Scene4
 
@@ -30,6 +35,8 @@ This next task is to put an object into the the skybox and create a mirror and a
 Build a sphere inside a skybox. Following the ideas found in the learnOpenGL website (not the code), build reflection and refaction shaders to make the sphere look like a mirrored ball. In refraction mode you should the a small inverted image if the condos in the background. For bonus marks, combine reflection and refraction to simulate Fresnel's equation of implement Fresnel's real equation. The bottom part of this link cubemaps
 
 Your Scene should look something like this, with just reflection - the skull head does not need to move.
+
+<img src="FINAL-OpengGLFramework-Scene4.png" width="15%"></img> 
 
 
 Scene5
@@ -43,3 +50,6 @@ You could also bring the noise in to the fragment shader.
 I used this system "art" math here to generate a mixing function on the surface to simulate turbulence.
 This is just a code sample I got from an old out of date, early book on shaders. Google "Orange_Book_-_OpenGL_Shading_Language_2nd_Edition.pdf"
 There are endless things you can create. The section on turbulence is fun - remember, it is way out of date. 
+
+<img src="FINAL-OpengGLFramework-Scene5.png" width="15%"></img> 
+
