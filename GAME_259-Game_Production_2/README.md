@@ -1,6 +1,6 @@
 <h1>Game Productions 2</h1>
 
-The goal of this course was to design and protype a game created collabarltlviely through many students with different level of skills and strengths. My responicibility was designing the combat mechnaices and making sure the code was compatible and useable other teamates code. 
+The goal of this course was to design and prototype a game created collaboratively by many students with different levels of skills and strengths. My responsibility was designing the combat mechanics and ensuring the code was compatible and useable with other teammates' code.
 
 
 <img src="Capture.PNG" width="50%"></img> 
