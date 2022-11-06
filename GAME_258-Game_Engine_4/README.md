@@ -5,7 +5,7 @@ Further expanding 3D graphics through the use of OpenGL focusing on reueusable c
 
 
 <h2>Scene 0</h2>
-This assignment focused on loading in 3D models throguh an XML parser, such that each model can be easily position and orientation can be modiefied through an XML document without recompiling the code.
+This assignment focused on loading 3D models through an XML parser. Each 3D model can be adjusted through an XML document updating the position and orientation without recompiling the code.
 
 <img src="images/FINAL-ComponentFramework-Scene0.png" width="50%"></img> 
 
