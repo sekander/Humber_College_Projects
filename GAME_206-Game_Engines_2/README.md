@@ -4,8 +4,7 @@ Creating 3D game prototypes using unreal to simulate collisons, animation,
 basic artifiial intelligence and setting up application for multiplayer connectivity
 
 <h2>Assignment_1</h2>
-
-The task for this assignment was to modify the first person shotter template to implement actor targets destroyed upon whne an projectile is collided using c++. A timer needs to constantly decremented and printed to the screen, whenever a target is destroyed the timer add 5.0 seconds, the functionality of this code was implemented in the Gamemode, such that the target and the gamemode are capable of communicating with each other.
+The task for this assignment was to modify the first-person shooter template to implement actor targets destroyed when a projectile collided using c++. In addition, a timer needs to be decremented and printed on the screen constantly. Once the target is destroyed, the timer will add 5.0 seconds. The functionality of this code was implemented in the Gamemode, so the target and the game mode can communicate.
 
 <img src="images/Capture.PNG" width="40%"></img>
 
