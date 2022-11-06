@@ -1,6 +1,6 @@
 <h1>Game Engines 4 - Component Framework</h1>
 
-Further expanding 3D graphics through the use of OpenGL focusing on reueusable code and smart pointers to easily manage and organize data used by the application. Learned how to use external files to load assets through the use of tinyXML, and incoprated Enity Component System(ECS) design model.
+Further expanding 3D graphics through OpenGL focuses on reusable code and smart pointers to easily manage and organize data used by the application. Learned how to use external files to load assets through tinyXML and incorporated Entity Component System(ECS) design.
 
 
 
