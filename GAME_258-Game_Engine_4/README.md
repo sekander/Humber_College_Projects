@@ -12,7 +12,7 @@ This assignment focused on loading 3D models through an XML parser. Each 3D mode
 
 
 <h2>Scene 1</h2>
-The task for this assignment was to implement new concepts learned and apply the use of smart-pointers and components into the scene so data can be easily organized and any objects that were created would be destroyed ensuring no memory leakss occur.
+The task for this assignment was to implement newly learned concepts and apply smart pointers and components. Adding components to the scene allows data to be organized, and any objects created would be automatically destroyed through a smart pointer, ensuring no memory leaks occur.
 
 <img src="images/FINAL-ComponentFramework-Scene1.png" width="50%"></img> 
 
