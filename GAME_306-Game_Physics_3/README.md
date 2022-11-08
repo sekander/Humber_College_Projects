@@ -5,15 +5,9 @@ Gained an understanding how to create geometric primitive objects such as, cube,
 <h2>Assignment 1</h2>
 Design and implement geometric primitives to represent mesh for 3D models loaded into the scene with given framework.  
 
-<img src="images/Capture.PNG" width="50%"></img> 
+<img src="images/Capture.PNG" width="40%"></img> | <img src="images/Capture-1.PNG" width="40%"></img> 
 
 
-<img src="images/Capture-1.PNG" width="50%"></img> 
-
-
-<img src="images/Capture-2.PNG" width="50%"></img> 
-
-
-<img src="images/Capture-3.PNG" width="50%"></img> 
+<img src="images/Capture-2.PNG" width="40%"></img> | <img src="images/Capture-3.PNG" width="40%"></img> 
 
 <h2> Assignment 2</h2>
