@@ -6,7 +6,7 @@ Introductory course to learning Vulkan, acoomplish loading 3D models into the sc
 Created a 3 light system using phong shader model, and was able to modify the lights through the use of UBO.
 
 <img src="images/Screenshot from 2022-11-04 17-13-10.png" width="50%"></img> 
-
+<video src='videos/Assignment_1_video_presentation.mkv' width=180/>
 
 
 <h2>Assignment 2</h2>
@@ -15,6 +15,8 @@ Task for this assignment was to change how models are loaded using push constant
 
 
 <img src="images/Screenshot from 2022-11-04 17-11-45.png" width="50%"></img> 
+
+<video src='videos/Video_Presentation.mkv' width=180/>
 
 <h2>Assignment 3</h2>
 Create a two different objects on the screen in the GPU and draw them. This means storing the data in separate vertex and index buffers.
