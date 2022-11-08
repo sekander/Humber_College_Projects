@@ -1,8 +1,9 @@
 <h1>Game Physics 3</h1>
-Students explore the development of a simple 3D physics engine that could be used in their capstone project. Students define the mass distribution of a 3D rigid body. Learners numerically integrate the equations of motion and the orientation quaternion to predict positions for the next frame of their game. Students examine techniques to detect collisions between simple 3D objects.
+Gained an understanding how to create geometric primitive objects such as, cube, sphere, cylinder and capsule. Geometric primitives represents mesh to 3D models that were loaded into the scene such that the program can interact with the objects throguh ray casting. 
 
 
 <h2>Assignment 1</h2>
+Design and implement geometric primitives to represent mesh for 3D models loaded into the scene with given framework.  
 
 <img src="images/Capture.PNG" width="50%"></img> 
 
