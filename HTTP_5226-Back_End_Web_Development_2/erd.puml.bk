@@ -1,0 +1,30 @@
+@startuml
+
+' Define entities (tables)
+class "Player" {
+  + player_id : Integer <<PK>>
+  + name : Varchar(255) <<Not Null>>
+  + email : Varchar(255) <<Unique, Not Null>>
+}
+
+class "Card" {
+  + card_id : Integer <<PK>>
+  + name : Varchar(255) <<Not Null, Unique>>
+  + description : Text <<Not Null>>
+}
+
+class "Deck" {
+  + deck_id : Integer <<PK>>
+  + name : Varchar(255) <<Not Null>>
+  + player_id : Integer <<FK>>
+  + card_id : Integer <<FK>>
+}
+
+' Define relationships between entities
+"Player" ||--o{ "Deck" : "has"   ' One-to-many: One player can have many decks
+"Deck" }|--|| "Player" : "belongs to"   ' Many-to-one: One deck belongs to one player
+"Deck" ||--|| "Card" : "contains"   ' One-to-one: A deck contains exactly one card
+"Card" o--o "Deck" : "can appear in multiple"   ' Many-to-many: A card can appear in multiple decks
+
+@enduml
+

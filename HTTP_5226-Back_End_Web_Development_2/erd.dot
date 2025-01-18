@@ -1,0 +1,17 @@
+digraph ERD {
+    rankdir=LR;
+
+    node [shape=record];
+
+    // Entities
+    Player [label="{Player|player_id: int (PK)\lname: varchar\lemail: varchar\l}"];
+    Deck [label="{Deck|deck_id: int (PK)\lplayer_id: int (FK)\ldeck_name: varchar\l}"];
+    Card [label="{Card|card_id: int (PK)\lname: varchar\ldescription: text\l}"];
+    DeckCard [label="{DeckCard|deck_id: int (FK)\lcard_id: int (FK)\lquantity: int\l}"];
+
+    // Relationships
+    Player -> Deck [label="1 to N" arrowhead="crow" arrowtail="none" dir="both"];
+    Deck -> DeckCard [label="1 to N" arrowhead="crow" arrowtail="none" dir="both"];
+    Card -> DeckCard [label="1 to N" arrowhead="crow" arrowtail="none" dir="both"];
+}
+
