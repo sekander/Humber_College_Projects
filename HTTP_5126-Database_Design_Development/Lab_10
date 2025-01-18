@@ -1,0 +1,182 @@
+
+
+PART 1
+------
+=========================================================================================
+=========================================================================================
+=========================================================================================
+
+A)
+
+mongosh "mongodb+srv://http5126lab10.grhlt.mongodb.net/" --apiVersion 1 --username n01001831
+Enter password: *********
+Current Mongosh Log ID:	6750f9096140240c59096300
+Connecting to:		mongodb+srv://<credentials>@http5126lab10.grhlt.mongodb.net/?appName=mongosh+2.3.3
+Using MongoDB:		8.0.3 (API Version 1)
+Using Mongosh:		2.3.3
+mongosh 2.3.4 is available for download: https://www.mongodb.com/try/download/shell
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+B)
+
+Atlas atlas-130j26-shard-0 [primary] test> use http5126_lab10
+switched to db http5126_lab10
+
+PART 2
+------
+=========================================================================================
+=========================================================================================
+=========================================================================================
+
+Atlas atlas-130j26-shard-0 [primary] http5126_lab10> db.n01001831_movie.insertMany([
+...   {
+...   title: "The Imitation Game",
+...   genres: [
+...       "Historical Drama"
+...     ],
+...   release_date: new Date("2014-09-28"),
+...   runtime: 114,
+...   actors: [
+...       { name: "Benedict Cumberbatch", role: "Alan Turing"
+...       },
+...       { name: "Keira Knightley", role: "Joan Clarke"
+...       },
+...       { name: "Matthew Goode", role: "Hugh Alexander"
+...       }
+...     ]
+...   },
+...   {
+...   title: "Ex Machina",
+...   genres: [
+...       "Drama",
+...       "Sci-Fi"
+...     ],
+...   release_date: new Date("2015-04-24"),
+...   runtime: 110
+...   },
+...   {
+...   title: "In the Heights",
+...   genres: [
+...       "Musical"
+...     ],
+...   release_date: new Date("2021-06-10"),
+...   runtime: 143,
+...   reviews: [
+...       {
+...       reviewer: "John Doe",
+...       rating: 9,
+...       comment: "An amazing movie about the life of Alan Turing."
+...       },
+...       {
+...       reviewer: "Jane Smith",
+...       rating: 8,
+...       comment: "A well-acted film with a fascinating story."
+...       }
+...     ]
+...   }
+... ]
+... )
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6750f9e46140240c59096301'),
+    '1': ObjectId('6750f9e46140240c59096302'),
+    '2': ObjectId('6750f9e46140240c59096303')
+  }
+}
+
+PART 3
+------
+=========================================================================================
+=========================================================================================
+=========================================================================================
+
+
+A)
+
+Atlas atlas-130j26-shard-0 [primary] http5126_lab10> db.n01001831_movie.find();
+[
+  {
+    _id: ObjectId('6750f9e46140240c59096301'),
+    title: 'The Imitation Game',
+    genres: [ 'Historical Drama' ],
+    release_date: ISODate('2014-09-28T00:00:00.000Z'),
+    runtime: 114,
+    actors: [
+      { name: 'Benedict Cumberbatch', role: 'Alan Turing' },
+      { name: 'Keira Knightley', role: 'Joan Clarke' },
+      { name: 'Matthew Goode', role: 'Hugh Alexander' }
+    ]
+  },
+  {
+    _id: ObjectId('6750f9e46140240c59096302'),
+    title: 'Ex Machina',
+    genres: [ 'Drama', 'Sci-Fi' ],
+    release_date: ISODate('2015-04-24T00:00:00.000Z'),
+    runtime: 110
+  },
+  {
+    _id: ObjectId('6750f9e46140240c59096303'),
+    title: 'In the Heights',
+    genres: [ 'Musical' ],
+    release_date: ISODate('2021-06-10T00:00:00.000Z'),
+    runtime: 143,
+    reviews: [
+      {
+        reviewer: 'John Doe',
+        rating: 9,
+        comment: 'An amazing movie about the life of Alan Turing.'
+      },
+      {
+        reviewer: 'Jane Smith',
+        rating: 8,
+        comment: 'A well-acted film with a fascinating story.'
+      }
+    ]
+  }
+]
+
+
+B)
+
+Atlas atlas-130j26-shard-0 [primary] http5126_lab10> db.n01001831_movie.find({"title": "The Imitation Game" });
+[
+  {
+    _id: ObjectId('6750f9e46140240c59096301'),
+    title: 'The Imitation Game',
+    genres: [ 'Historical Drama' ],
+    release_date: ISODate('2014-09-28T00:00:00.000Z'),
+    runtime: 114,
+    actors: [
+      { name: 'Benedict Cumberbatch', role: 'Alan Turing' },
+      { name: 'Keira Knightley', role: 'Joan Clarke' },
+      { name: 'Matthew Goode', role: 'Hugh Alexander' }
+    ]
+  }
+]
+
+C)
+
+Atlas atlas-130j26-shard-0 [primary] http5126_lab10> db.n01001831_movie.find({"title": "Ex Machina" }, {"genres" : 1});
+[
+  {
+    _id: ObjectId('6750f9e46140240c59096302'),
+    genres: [ 'Drama', 'Sci-Fi' ]
+  }
+]
+
+
+PART 4.
+------
+=========================================================================================
+=========================================================================================
+=========================================================================================
+
+A)
+
+Atlas atlas-130j26-shard-0 [primary] http5126_lab10> db.n01001831_movie.deleteMany({});
+{ acknowledged: true, deletedCount: 3 }
+
+
+
