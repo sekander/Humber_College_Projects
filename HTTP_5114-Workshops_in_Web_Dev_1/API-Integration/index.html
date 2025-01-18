@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Books API</title>
+  </head>
+  <body>
+    <h1>Google Books API</h1>
+
+    <ul id="book_list"></ul>
+
+    <script>
+        var bookList = document.getElementById("book_list");
+        var key = "AIzaSyAWuhsQTuKX0VjsiftQXKw35K3ifzMm7nk";
+        var url = `https://www.googleapis.com/books/v1/volumes?q=Warriors&key=${key}`;
+
+        //https://developers.google.com/books/docs/v1/getting_started
+
+        // Initiate an API request to our URL with our KEY
+        fetch(url)
+        .then(function (response){
+            // console.log(response);
+            // Extract the JSON our of the FETCH RESPONSE
+            return response.json();
+        }) 
+        .then(function (data){
+            // CONSOLE.LOG the JSON data
+            console.log(data);
+
+            // Loop through the ITEMS in the DATA JSON
+            data.items.forEach(function(item){
+                // Extract the TITLE, AUTHOR, and LINK
+                var title = item.volumeInfo.title;
+                var author = item.volumeInfo.authors[0];
+                var link = item.volumeInfo.canonicalVolumeLink;
+
+                // If there are images, extract the SMALLTHUMBNAIL
+                if(item.volumeInfo.hasOwnProperty("imageLinks")){
+                    var image = item.volumeInfo.imageLinks.smallThumbnail;
+                }
+                
+                // Build the LI to add the UL
+                var newItem = "<li><h2>"+ title + "</h2>"+ author + "<br>"+ "<a href='" + link + "'>" + link + "</a><br>";
+                
+                // If there is an IMAGE, add it to the LI 
+                if (item.volumeInfo.hasOwnProperty("imageLinks")) { newItem += "<img src='" + image + "'>";
+                }
+
+                // Close the li tag 
+                newItem += "</li>";
+
+                // Add the li HTML tag to the ul HTML tag
+                bookList.innerHTML += newItem;
+            });
+        });
+
+    </script>
+  </body>
+</html>
