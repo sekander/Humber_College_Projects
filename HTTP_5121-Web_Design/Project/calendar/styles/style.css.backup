@@ -1,0 +1,498 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* General Layout */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f6f9; /* Light background color for contrast */
+}
+
+
+/* Calendar Container Styling */
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+#calendar-month {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for floating effect */
+    width: 90vw; /* Responsive width, using viewport width for flexibility */
+    max-width: 1200px;
+    position: relative;
+    height: 90vw; /* Set height equal to width */
+    max-height: 1200px; /* Maximum height limit */
+}
+
+/* Header for Month Navigation */
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#calendar-header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Calendar Table Styling */
+#calendar {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+/* Day Header (Day Names) */
+.dayHeader {
+    font-size: 1rem; /* Adjusted font size */
+    font-weight: 600;
+    color: #fff; /* White text color for better contrast */
+    text-align: center;
+    background-color: #4CAF50; /* Soft green background */
+    border-bottom: 2px solid #388E3C; /* Darker green border for contrast */
+    padding: 10px 0; /* Adjusted padding for better spacing */
+    height: 40px; /* Fixed height for day headers */
+    line-height: 40px; /* Vertically center the text */
+    border-radius: 4px; /* Rounded corners for a softer look */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Light shadow for a floating effect */
+}
+
+/* Optional: Add hover effect for day header */
+.dayHeader:hover {
+    background-color: #388E3C; /* Darker green when hovered */
+    cursor: pointer;
+}
+
+/* Individual Day Cell Styling */
+#calendar td {
+    width: 14.28%; /* 7 days per week, 100%/7 days = 14.28% */
+    height: 14.28%; /* Equal height and width */
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+/* Ensure table header is displayed properly */
+#calendar thead {
+    display: table-header-group; /* Default behavior, ensures it's displayed */
+}
+
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+
+
+/* Modal Styles */
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    background-color: #fff;
+    width: 500px; /* Slightly larger modal */
+    max-width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.modal-header {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px 12px 0 0;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #f39c12;
+}
+
+.modal-body {
+    padding: 30px;
+    color: #34495e;
+    font-size: 1.2rem;
+    text-align: left;
+    line-height: 1.8;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adds space between the items */
+}
+
+.modal-footer {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between; /* Space out buttons */
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 0 0 12px 12px;
+    border-top: 1px solid #ddd;
+    width: 100%;
+}
+
+/* Style each div inside the modal body */
+.modal-body div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; /* Align content vertically */
+    justify-content: center; /* Align content in the center */
+    width: 180px; /* Ensure each div has a fixed width */
+}
+
+/* Button Styling */
+.modal-footer button {
+    padding: 15px 30px; /* Larger padding for the buttons */
+    font-size: 1.4rem; /* Bigger font size */
+    font-weight: bold; /* Bold text for emphasis */
+    color: white;
+    border: none;
+    border-radius: 12px; /* Round corners */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    width: 48%; /* Buttons take up 48% of the footer width */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+}
+
+/* Hover Effects for Buttons */
+.modal-footer button:hover {
+    transform: translateY(-6px); /* Larger hover effect */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Bigger shadow on hover */
+}
+
+/* Focus effect */
+.modal-footer button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.6);
+}
+
+
+/* Align buttons with text inside modal */
+.modal-body button, .modal-body input {
+    margin-top: 10px; /* Adds space between input fields/buttons */
+}
+
+.modal-body ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.modal-body li {
+    margin-bottom: 15px;
+    font-size: 1.1rem; /* Slightly larger font for readability */
+}
+
+.modal-body h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #2980b9; /* Light blue color for headers */
+}
+
+
+
+
+
+/* Button Styling */
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+#prev-month, #next-month {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #3498db;
+    color: white;
+    font-size: 2rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#prev-month {
+    left: 20px;
+}
+
+#next-month {
+    right: 20px;
+}
+
+/* Remove hover effect on navigation buttons */
+#prev-month, #next-month {
+    transform: translateY(-50%); /* Keep them fixed in position */
+}
+
+#save-button, #load-button {
+    padding: 15px 30px; /* Increased padding for larger buttons */
+    font-size: 1.2rem;  /* Increased font size */
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    position: fixed;
+    z-index: 10;
+}
+
+#save-button:hover, #load-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+#save-button {
+    bottom: 120px; /* Positioned above the footer */
+    right: 40px;   /* Right aligned */
+}
+
+#load-button {
+    bottom: 120px; /* Positioned above the footer */
+    left: 40px;    /* Left aligned */
+}
+
+
+/* Animations */
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+/*=========================================================================================================================================*/
+
+/* Active states for each level of animation */
+.day.terrible.active {
+    animation: terribleAnimation 5s forwards;
+}
+
+.day.poor.active {
+    animation: poorAnimation 5s forwards;
+}
+
+.day.bad.active {
+    animation: badAnimation 5s forwards;
+}
+
+.day.belowAverage.active {
+    animation: belowAverageAnimation 5s forwards;
+}
+
+.day.okay.active {
+    animation: okayAnimation 5s forwards;
+}
+
+.day.decent.active {
+    animation: decentAnimation 5s forwards;
+}
+
+.day.good.active {
+    animation: goodAnimation 5s forwards;
+}
+
+.day.veryGood.active {
+    animation: veryGoodAnimation 5s forwards;
+}
+
+.day.excellent.active {
+    animation: excellentAnimation 5s forwards;
+}
+
+.day.perfect.active {
+    animation: perfectAnimation 5s forwards;
+}
+
+
+
+
+
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%); /* Start from the right */
+    }
+    100% {
+        transform: translateX(0); /* Slide in to position */
+    }
+}
+
+@keyframes slideOutToLeft {
+    0% {
+        transform: translateX(0); /* Start from current position */
+    }
+    100% {
+        transform: translateX(-100%); /* Slide out to the left */
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%); /* Start from the left */
+    }
+    100% {
+        transform: translateX(0); /* Slide in to position */
+    }
+}
+
+@keyframes slideOutToRight {
+    0% {
+        transform: translateX(0); /* Start from current position */
+    }
+    100% {
+        transform: translateX(100%); /* Slide out to the right */
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+/* Animations for Day States */
+
+@keyframes terribleAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+        background-color: rgb(255, 5, 0); /* Green */
+    }
+}
+@keyframes poorAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+    background-color: rgb(225, 30, 0); /* Green */
+    }
+}
+@keyframes belowAverageAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+    background-color: rgb(200, 80, 0); /* Green */
+    }
+}
+@keyframes badAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+    background-color: rgb(175, 55, 0); /* Green */
+    }
+}
+@keyframes belowAverageAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+    background-color: rgb(150, 80, 0); /* Green */
+    }
+}
+@keyframes okayAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+        background-color: rgb(125, 105, 0); /* Green */
+    }
+}
+@keyframes decentAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+    background-color: rgb(100, 130, 0); /* Green */
+    }
+}
+@keyframes goodAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+        background-color: rgb(75, 155, 0); /* Green */
+    }
+}
+@keyframes veryGoodAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+        background-color: rgb(50, 180, 0); /* Green */
+    }
+}
+@keyframes excellentAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+        background-color: rgb(25, 205, 0); /* Green */
+    }
+}
+@keyframes excellentAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+        background-color: rgb(25, 230, 0); /* Green */
+    }
+}
+
+@keyframes perfectAnimation {
+    0% {
+        background-color: rgb(255, 0, 0); /* Red */
+    }
+    100% {
+        background-color: rgb(0, 255, 0); /* Green */
+    }
+}
+
+
