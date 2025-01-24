@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Monty Hall Problem</title>
+  </head>
+  <body>
+    <h1>The Monty Hall Problem</h1>
+
+    <script>
+      //Initialize counters to track the number of times staying or switching was correct 
+      var switchCounter = 0; //counts the number of times switching wins
+      var stayCounter = 0;   //counts the number of times staying wins
+
+      //Run the simulation 10,000 times
+      for (var i = 0; i < 10000; i++) {
+      // Randomly place a car in a door 1, 2, or 3
+      // let car = Math.floor(Math.random() * 3) + 1;
+      var car = Math.ceil(Math.random() * 3);
+      document.write("<p>The car is in door number " + car + "</p>");
+
+      // Randomly choose a door 1, 2, or 3
+      var choice = Math.ceil(Math.random() * 3);
+      document.write("<p>The contestant chose door number " + choice + "</p>");
+
+      // Host removes a door that is neither the contestant's choice nor the car's door
+      do {
+        // Randomly choose a door to remove
+        var remove = Math.ceil(Math.random() * 3);
+         // Ensure the removed door is not the car's door or the contestant's choice
+      } while (remove === car || remove === choice);
+      
+      document.write("<p>The host removes door number " + remove + "</p>");
+
+      // Determine if the contestant should switch or stay and count the results
+      if (choice === car){
+        // If the contestant's initial choice was correct, increment the stay counter
+        stayCounter++;
+        document.write(
+          "<p style='color:red;'>The contestant should STAY</p>"
+        );
+      } else {
+        // If the contestant's initial choice was incorrect, increment the switch counter
+        switchCounter++;
+        document.write(
+          "<p style='color:green;'>The contestant should SWITCH</p>"
+        );
+      }
+    }
+    // Display the number of times staying or switching was correct
+    document.write(
+      "<h2 style='color:red;'>Stay was correct " + stayCounter + " times</h2>"
+      );
+    document.write(
+      "<h2 style='color:green;'>Switch was correct " + switchCounter + " times</h2>"
+      );
+
+      // Calculate and display the percentage of times switching was correct
+      var percent = Math.round((switchCounter / 10000) * 10000) / 100;
+      document.write(
+        "<h1>SWITCH was correct " + percent + " % of the time</h1>"
+      );
+    
+    </script>
+  </body>
+</html>

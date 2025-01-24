@@ -1,0 +1,258 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Page Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #34495e;
+    padding-top: 80px; /* Adjust for fixed header */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Container Styling */
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Calendar Header and Navigation Buttons */
+#calendar-month {
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s ease-out;
+}
+
+#calendar-month:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+#prev-month, #next-month {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #3498db;
+    color: white;
+    font-size: 2rem;
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+    z-index: 200;
+}
+
+#prev-month {
+    left: 10px;
+}
+
+#next-month {
+    right: 10px;
+}
+
+#prev-month:hover, #next-month:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+}
+
+/* Calendar Grid */
+#calendar {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-top: 10px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.dayHeader {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+td {
+    width: 14.2%;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.3s ease;
+}
+
+td:hover {
+    background-color: #f1c40f;
+    transform: scale(1.1);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    background-color: #fff;
+    width: 500px;
+    max-width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.modal-header {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px 12px 0 0;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 25px;
+    color: #34495e;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.modal-footer {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #f9f9f9;
+    border-radius: 0 0 12px 12px;
+}
+
+.modal-footer button {
+    padding: 15px 30px;
+    font-size: 1.4rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-footer button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.modal-footer button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.6);
+}
+
+.modal-footer .cancel-button {
+    background-color: #e74c3c;
+}
+
+.modal-footer .cancel-button:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Overlay Styles */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Animations */
+/* Animations */
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%); /* Start from the right */
+    }
+    100% {
+        transform: translateX(0); /* Slide in to position */
+    }
+}
+
+@keyframes slideOutToLeft {
+    0% {
+        transform: translateX(0); /* Start from current position */
+    }
+    100% {
+        transform: translateX(-100%); /* Slide out to the left */
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%); /* Start from the left */
+    }
+    100% {
+        transform: translateX(0); /* Slide in to position */
+    }
+}
+
+@keyframes slideOutToRight {
+    0% {
+        transform: translateX(0); /* Start from current position */
+    }
+    100% {
+        transform: translateX(100%); /* Slide out to the right */
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
