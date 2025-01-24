@@ -23,7 +23,7 @@ By the end of this course, we’ll be able to:
 
 ---
 
-## **Program Outcomes (Web Development 11491)**  
+## **Program Outcomes**  
 This course aligns with key program goals, including:  
 1. **Design & Optimize Web Solutions**: Build accessible and optimized web applications that meet client needs and follow best practices.  
 2. **Consistent Development Process**: Implement workflows that ensure smooth transitions between development and production environments.  
@@ -78,7 +78,7 @@ The course will include:
 
 ---
 
-## **Program Outcomes (Web Development 11491)**  
+## **Program Outcomes**  
 This course helps us build skills aligned with the program outcomes, such as:  
 1. **Communication & Collaboration**: Work effectively with teammates and stakeholders to ensure smooth collaboration.  
 2. **Professional Development**: Learn strategies to improve personal and professional performance.  
