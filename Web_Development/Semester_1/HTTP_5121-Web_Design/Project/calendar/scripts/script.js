@@ -276,8 +276,9 @@ window.onload = function () {
         let date = 1;
 
         //create rows for the week
-        // for (var i = 0; i < 6; i++) {
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < 6; i++) {
+            console.log("LOGGGING " + i);
+        // for (var i = 0; i < 4; i++) {
             const row = document.createElement("tr");
 
             //create columns days for each week

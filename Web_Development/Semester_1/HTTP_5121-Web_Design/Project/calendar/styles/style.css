@@ -25,8 +25,11 @@ body {
     align-items: center;
     width: 100%;
     height: 100%;  /* Take up available height */
-    max-height: 600px;  /* Set a maximum height (adjust as needed) */
+
+    max-height: 1000px;  /* Set a maximum height (adjust as needed) */
+    /* max-height: 600px;  Set a maximum height (adjust as needed) */
     margin: 0 auto; /* Centers the container horizontally */
+
     padding: 20px; /* Optional padding */
     overflow: hidden; /* Prevent overflow */
     position: relative;
@@ -43,11 +46,15 @@ body {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for floating effect */
+    
     width: 60vw; /* Responsive width, using viewport width for flexibility */
-    max-width: 1200px;
+    max-width: 1500px;
     position: relative;
     /* height: 80vw; Set height equal to width */
-    height: 60vw; /* Set height equal to width */
+    
+    height: 85vw; /* Set height equal to width */
+    /* height: 60vw; Set height equal to width */
+
     max-height: 1200px; /* Maximum height limit */
 }
 
@@ -60,7 +67,7 @@ body {
 }
 
 #calendar-header h2 {
-    font-size: 2rem;
+    font-size: 5rem;
     font-weight: 600;
     color: #333;
 }
@@ -115,6 +122,7 @@ body {
 /* Ensure table header is displayed properly */
 #calendar thead {
     display: table-header-group; /* Default behavior, ensures it's displayed */
+    height: 5vh;
 }
 
 /* Make sure the text inside the table cells scales responsively */
@@ -521,10 +529,19 @@ body {
 
 /* Responsive Design for Phones */
 @media (max-width: 480px) {
+
+    #calendar {
+        height: 90%;
+    }
     /* Mobile Devices Landscape and Portrait */
     #calendar-month {
-        width: 90vw;
-        height: 90vw;
+        width: 95vw;
+        height: 150vw;
+        /* height: 180vw; */
+        position: fixed;
+        top: 2.5vh;
+
+        padding: 0px; /* Optional padding */
     }
 
     #calendar th, #calendar td {
@@ -563,6 +580,39 @@ body {
     .modal.active {
         transform: translate(-50%, -50%) scale(0.45);
         opacity: 1; 
+        scale: 1.75;
+        top: 90%;
+        left: 85%;
+    }
+
+    #next-month {
+        background-color: #f39c12;
+        top : 90%;
+        scale: 2;
+        right: 10%;
+    }
+    
+    #prev-month {
+        background-color: #f39c12;
+        top : 90%;
+        scale: 2;
+        left: 10%;
+    }
+
+    #currentMonth {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 10px;
+    }
+
+    #save-button, #load-button {
+        /* padding: 15px 30px; Increased padding for larger buttons */
+        /* font-size: 1.2rem;  Increased font size */
+        font-size: 5vw;  /* Increased font size */
+        background-color: #3498db;
+        height: 10vw;
+        width: 40vw;
+        padding: 0;
     }
 }
 
