@@ -1,0 +1,283 @@
+###########################################################################################################################
+###########################################################################################################################
+###########################################################################################################################
+### Player API Calls ###
+
+#CREATE 
+#
+curl -X POST localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"100", "name":"Nahid", "email":"sekander@protonmail.com"}'
+
+{"success":true,"data":{"id":100,"name":"Nahid","email":"sekander@protonmail.com","decks":null},
+"message":"Created: Passion_Project.Models.Player"}
+
+
+curl -X POST localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"100", "name":"Nahid", "email":"sekander@protonmail.com"}'
+{"data":{"id":100,"name":"Nahid","email":"sekander@protonmail.com","decks":null},
+"message":"PLAYER ID 100 is being used, please choose a different ID"}
+
+curl -X POST localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"0", "name":"Nahid", "email":"sekander@protonmail.com"}'
+{"data":{"id":0,"name":"Nahid","email":"sekander@protonmail.com","decks":null},
+"message":"ID cannot be 0"}
+
+curl -X POST localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"-sdf0", "name":"Nahid", "email":"sekander@protonmail.com"}'
+{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"player":["The player field is required."],"$.id":["The JSON value could not be converted to System.Int32. Path: $.id | LineNumber: 0 | BytePositionInLine: 13."]},"traceId":"00-d0f3e9abfd6e0f5a0eee1cb15727035a-f17b4e68503608ea-00"}
+
+curl -X POST localhost:5065/api/player -H "Content-Type: application/json" -d '{"id":"-12", "name":"Nahid", "email":"sekander@protonmail.com"}'
+{"data":{"id":-12,"name":"Nahid","email":"sekander@protonmail.com","decks":null},
+"message":"ID cannot be 0"}
+
+curl -X POST localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"32", "nam":"Nahid", "email":"sekander@protonmail.com"}'
+{"data":{"id":32,"name":null,"email":"sekander@protonmail.com","decks":null},
+"message":"Name cannot be null or empty."}
+
+curl -X POST localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"32", "name":"sjdf", "emai":"sekander@protonmail.com"}'
+{"data":{"id":32,"name":"sjdf","email":null,"decks":null},
+"message":"Email cannot be null or empty."}
+
+
+#READ
+
+curl localhost:5065/api/player
+{"value":[{"id":2,"name":"Nahid","email":"s[1;5Cekander@protonmail.com","decks":null},{"id":3,"name":"Nahid","email":"","decks":null},{"id":4,"name":null,"email":"","decks":null},{"id":6,"name":"x","email":"sekander@protonl.com","decks":null},{"id":7,"name":"x","email":"sekander@protonl.com","decks":null},{"id":8,"name":"Nahid","email":"sekander@protonl.com","decks":null},{"id":9,"name":"Nahid","email":"sekander@protonl.ca","decks":null},{"id":10,"name":"Nahid","email":"sekander@protonl.ca","decks":null},{"id":11,"name":"Nahid","email":"sekander@protonl.ca","decks":null},{"id":13,"name":"test","email":"sekander@protonmail.com","decks":null},{"id":14,"name":"NNahid","email":"sekander@protonl.com","decks":null},{"id":15,"name":"d","email":"sekander@protonl.com","decks":null},{"id":16,"name":"FFFxxSSS","email":"sekander@protonl.com","decks":null},{"id":17,"name":"x","email":"sekander@protonl.com","decks":null}],"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":200}
+
+curl localhost:5065/api/player/2
+{"value":{"id":2,"name":"Nahid","email":"s[1;5Cekander@protonmail.com","decks":null},"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":200}
+
+curl localhost:5065/api/player/1
+{"value":{"success":false,"data":1,
+"message":"ID not found","requestedId":1},"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":400}
+
+
+curl localhost:5065/api/player/-32
+{"value":{"success":false,"data":-32,
+"message":"Please Enter an ID greater than 0","requestedId":-32},"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":400}f
+
+
+#UPDATE
+#
+
+curl -X PUT localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"32", "name":"NNNNNNN", "email":"sekander@protonmail.com"}'
+{"success":true,"data":{"id":32,"name":"NNNNNNN","email":"sekander@protonmail.com","decks":null},
+"message":"Updated: Passion_Project.Models.Player"}
+
+curl -X PUT localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"0", "name":"NNNNNNN", "email":"sekander@protonmail.com"}'
+{"data":{"id":0,"name":"NNNNNNN","email":"sekander@protonmail.com","decks":null},
+"message":"ID not found"}
+
+curl -X PUT localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"32", "name":"", "email":"sekander@protonmail.com"}'
+{"data":{"id":32,"name":"","email":"sekander@protonmail.com","decks":null},
+"message":"Name cannot be null or empty."}
+
+curl -X PUT localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"32", "name":"NNNNNNN", "email":""}'
+{"data":{"id":32,"name":"NNNNNNN","email":"","decks":null},
+"message":"Email cannot be null or empty."}
+
+curl -X PUT localhost:5065/api/player -H "Content-Type: application/json" 
+-d '{"id":"32", "name":"NNNNNNN", "email":"sdfs"}'
+{"data":{"id":32,"name":"NNNNNNN","email":"sdfs","decks":null},
+"message":"Invalid Email format"}
+
+
+#DELETE
+#
+
+curl -X DELETE localhost:5065/api/player/32
+{"success":true,"data":32,
+"message":"Deleted : 32","requestedId":32}
+
+curl -X DELETE localhost:5065/api/player/32
+{"success":false,"data":32,
+"message":"ID not found","requestedId":32}
+
+curl -X DELETE localhost:5065/api/player/0
+{"success":false,"data":0,
+"message":"Please Enter an ID greater than 0","requestedId":0}
+
+###########################################################################################################################
+###########################################################################################################################
+###########################################################################################################################
+
+### Card API CALLs ###
+#
+
+#CREATE
+curl -X POST localhost:5065/api/card -H "Content-Type: application/json" 
+-d '{"id":1000000,"name":"TEST","description":"TEST DESCRIPTION"}'
+{"success":true,"data":{"id":1000000,"name":"TEST","description":"TEST DESCRIPTION"},
+"message":"Created: Passion_Project.Models.Card"}
+
+curl -X POST localhost:5065/api/card -H "Content-Type: application/json" 
+-d '{"id":1000000,"name":"TEST","description":"TEST DESCRIPTION"}'
+{"data":{"id":1000000,"name":"TEST","description":"TEST DESCRIPTION"},
+"message":"CARD ID 1000000 is being used, please choose a different ID"}
+
+curl -X POST localhost:5065/api/card -H "Content-Type: application/json" 
+-d '{"id":1000001,"name":"","description":"TEST DESCRIPTION"}'
+{"data":{"id":1000001,"name":"","description":"TEST DESCRIPTION"},
+"message":"Name cannot be null or empty."}
+
+curl -X POST localhost:5065/api/card -H "Content-Type: application/json" 
+-d '{"id":1000001,"name":"sdfs","description":""}'
+{"data":{"id":1000001,"name":"sdfs","description":""},
+"message":"Description cannot be null or empty."}
+
+#READ
+#
+#
+curl localhost:5065/api/card
+
+curl localhost:5065/api/card/1000000
+{"value":{"id":1000000,"name":"TEST","description":"TEST DESCRIPTION"},"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":200}
+
+curl localhost:5065/api/card/100000
+{"value":{"success":false,"data":100000,
+"message":"ID not found","requestedId":100000},"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":400}
+
+#UPDATE
+
+curl -X PUT localhost:5065/api/card -H "Content-Type: application/json" 
+-d '{"id":1000000,"name":"TEST","description":"TEST "}'
+{"success":true,"data":{"id":1000000,"name":"TEST","description":"TEST "},
+"message":"Updated: Passion_Project.Models.Card"}
+
+curl -X PUT localhost:5065/api/card -H "Content-Type: application/json" 
+-d '{"id":1000000,"name":"","description":"TEST "}'
+{"data":{"id":1000000,"name":"","description":"TEST "},
+"message":"Name cannot be null or empty."}
+
+curl -X PUT localhost:5065/api/card -H "Content-Type: application/json" 
+-d '{"id":1000000,"name":"TEST","description":""}'
+{"data":{"id":1000000,"name":"TEST","description":""},
+"message":"Description cannot be null or empty."}
+
+curl -X PUT localhost:5065/api/card -H "Content-Type: application/json" 
+-d '{"id":1000001,"name":"TEST","description":"TEST "}'{"data":{"id":1000001,"name":"TEST","description":"TEST "},
+"message":"ID not found"}
+
+#DELETE
+
+curl -X DELETE localhost:5065/api/card/1000000
+{"success":true,"data":1000000,
+"message":"Deleted : 1000000","requestedId":1000000}
+
+curl -X DELETE localhost:5065/api/card/1000000
+{"success":false,"data":1000000,
+"message":"ID not found","requestedId":1000000}
+
+curl -X DELETE localhost:5065/api/card/-23
+{"success":false,"data":-23,
+"message":"Please Enter an ID greater than 0","requestedId":-23}
+
+###########################################################################################################################
+###########################################################################################################################
+###########################################################################################################################
+
+### Deck API CALLs ###
+#
+
+#CREATE
+#
+curl -X POST localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":10, "playerID":"4","name":"sdfs","description":"TEST"}'
+{"success":true,"data":{"id":10,"name":"sdfs","description":"TEST","playerID":4,"currentPlayer":null},
+"message":"Created: Passion_Project.Models.Deck"}f
+
+curl -X POST localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":10, "playerID":"4","name":"sdfs","description":"TEST"}'
+{"data":{"id":10,"name":"sdfs","description":"TEST","playerID":4,"currentPlayer":null},
+"message":"DECK ID 10 is being used, please choose a different ID"}
+
+curl -X POST localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":11 ,"name":"sdfs","description":"TEST"}'
+{"data":{"id":11,"name":"sdfs","description":"TEST","playerID":0,"currentPlayer":null},
+"message":"Deck ID or Player ID cannot be 0"}
+
+curl -X POST localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":11, "playerID":"4","name":"","description":"TEST"}'
+{"data":{"id":11,"name":"","description":"TEST","playerID":4,"currentPlayer":null},
+"message":"Name cannot be null or empty."}
+
+curl -X POST localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":11, "playerID":"4","name":"Test","description":""}'
+{"data":{"id":11,"name":"Test","description":"","playerID":4,"currentPlayer":null},
+"message":"Description cannot be null or empty."}
+
+
+
+curl -X POST localhost:5065/api/deck/card -H "Content-Type: application/json" 
+-d '{"deckID":1, "cardID":"4"}'
+{"deckID":1,"deck":{"id":1,"name":"New Deck","description":"A brand new deck.","playerID":2,"currentPlayer":null},
+ "cardID":4,"card":{"id":4,"name":"Kemba's Outfitter","description":"When Kemba's Outfitter enters, choose one —\n• Choose an Equipment card in your hand. It perpetually gains equip {1}.\n• Target Equipment you control perpetually gains equip {1}."}}
+
+curl -X POST localhost:5065/api/deck/card -H "Content-Type: application/json" -d '{"deckID":1, "cardID":"4"}'
+{"message":"Card with ID 4 already exists in Deck with ID 1."}
+
+curl -X POST localhost:5065/api/deck/card -H "Content-Type: application/json" -d '{"deckID":11, "cardID":"4"}'
+Deck with ID 11 not found.
+
+curl -X POST localhost:5065/api/deck/card -H "Content-Type: application/json" -d '{"deckID":1, "cardID":"42322222"}'
+Card with ID 42322222 not found.
+
+#READ
+curl localhost:5065/api/deck
+{"value":[{"id":1,"name":"New Deck","description":"A brand new deck.","playerID":2,"currentPlayer":null},{"id":2,"name":"Nahid Deck","description":"Test DeckKKKK","playerID":2,"currentPlayer":null},{"id":3,"name":"Nahid Deck","description":"Test DeckKKKK","playerID":3,"currentPlayer":null},{"id":4,"name":"New Deck","description":"A brand new deck.","playerID":2,"currentPlayer":null},{"id":5,"name":"Nahid Deck","description":"Test DeckKKKK","playerID":4,"currentPlayer":null},{"id":6,"name":"Nahid eck","description":"Test DeckKKKK","playerID":4,"currentPlayer":null},{"id":8,"name":"New Deck","description":"A brand new deck.","playerID":2,"currentPlayer":null},{"id":10,"name":"sdfs","description":"TEST","playerID":4,"currentPlayer":null}],"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":200}
+
+curl localhost:5065/api/deck/10
+{"value":{"id":10,"name":"sdfs","description":"TEST","playerID":4,"currentPlayer":null},"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":200}
+
+curl localhost:5065/api/deck/11
+{"value":{"success":false,"data":11,"message":"ID not found","requestedId":11},"formatters":[],"contentTypes":[],"declaredType":null,"statusCode":400}
+
+
+curl localhost:5065/api/deck/1/allcards
+[4]
+
+#UPDATE
+curl -X PUT localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":10, "playerID":"4","name":"Test","description":"test description"}'
+{"success":true,"data":{"id":10,"name":"Test","description":"test description","playerID":4,"currentPlayer":null},
+"message":"Updated: Passion_Project.Models.Deck"}
+
+curl -X PUT localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":11, "playerID":"4","name":"Test","description":"test description"}'
+{"data":{"id":11,"name":"Test","description":"test description","playerID":4,"currentPlayer":null},
+"message":"ID not found"}
+
+curl -X PUT localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":10, "playerID":"4","name":"","description":"test description"}'
+{"data":{"id":10,"name":"","description":"test description","playerID":4,"currentPlayer":null},
+"message":"Name cannot be null or empty."}
+
+curl -X PUT localhost:5065/api/deck -H "Content-Type: application/json" 
+-d '{"id":10, "playerID":"4","name":"Test","description":""}'
+{"data":{"id":10,"name":"Test","description":"","playerID":4,"currentPlayer":null},
+"message":"Description cannot be null or empty."}
+
+#DELETE
+
+curl -X DELETE localhost:5065/api/deck/10
+{"success":true,"data":10,"message":"Deleted : 10","requestedId":10}
+
+curl -X DELETE localhost:5065/api/deck/10
+{"success":false,"data":10,"message":"ID not found","requestedId":10}
+
+curl -X DELETE localhost:5065/api/deck/0
+{"success":false,"data":0,"message":"Please Enter an ID greater than 0","requestedId":0}
+
+###########################################################################################################################
+###########################################################################################################################
+###########################################################################################################################
+
+
+
+
