@@ -1,19 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
 namespace Passion_Project.Models
 {
-    [Index(nameof(email), IsUnique = true)]
     public class Player
     {
-        [Key]
-        public int player_id {get; set;}
-
-        public required string name {get; set;}
-
-        public required string email {get; set;}
-
+        // Unique identifier for the player
+        public int ID {get; set;}
+        // Name of the player
+        public string ?Name {get; set;}
+        // Email of the player
+        public string ?Email {get; set;}
+        // Collection of decks owned by the player
+        public ICollection<Deck> ?Decks {get; set;}
     }
-
 }
