@@ -43,7 +43,7 @@
 
 <?php
 
-	$connect = mysqli_connect('34.60.40.76', 'root', 'root', 'http_5225');
+	$connect = mysqli_connect('**.**.**.**', '****', '****', '*********');
 
 	if($connect)
 		echo "<h3>Connected</h3>";

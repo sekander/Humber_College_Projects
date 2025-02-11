@@ -28,7 +28,7 @@ This project displays random color data retrieved from a MySQL database and pres
     - `Hue` (FLOAT)
     - `HSLS` (FLOAT)
     - `HSLL` (FLOAT)
-4. Update the PHP code with the correct database credentials in the `$connect` variable (currently set to `'34.60.40.76', 'root', 'root'`).
+4. Update the PHP code with the correct database credentials in the `$connect` variable.
 
 ## Database Example
 
