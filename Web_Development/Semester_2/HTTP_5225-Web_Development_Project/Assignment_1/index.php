@@ -1,7 +1,6 @@
 <?php
 
-	//$connect = mysqli_connect('34.60.40.76', 'root', 'root', 'http_5225');
-	$connect = mysqli_connect('localhost', 'fnky', '454732', 'MTG_Final_DB');
+	$connect = mysqli_connect('*********', '****', '******', '************');
 
 	if($connect)
 		echo "<h1>Random MTG Card Data</h1>";
