@@ -1,0 +1,1 @@
+{"Command":"\"docker-entrypoint.s…\"","CreatedAt":"2025-01-29 17:27:47 -0500 EST","ID":"b8269f3dc475","Image":"godot-webgl-server","Labels":"","LocalVolumes":"0","Mounts":"","Names":"bold_mirzakhani","Networks":"bridge","Ports":"3000/tcp, 0.0.0.0:5005->5005/tcp, :::5005->5005/tcp","RunningFor":"3 days ago","Size":"0B (virtual 1.01GB)","State":"running","Status":"Up 3 days"}

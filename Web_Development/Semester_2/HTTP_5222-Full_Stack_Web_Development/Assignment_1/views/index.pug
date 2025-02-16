@@ -1,0 +1,46 @@
+extends common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Assignment 1 
+
+     //- Create an anchor tag (link) to redirect to /admin/admin.pug
+    div#admin-controls 
+        a(href='/admin') Go to Admin Page
+
+      //- Pairing Docker PS and Docker Stats by matching IDs
+      //- Loop through each docker_ps json 
+    each psContainer, index in docker_ps
+      //- Find matching stats for the current psContainer by matching IDs
+      //- - const matchingStats = docker_stats.find(stats => stats.Container === psContainer.ID)
+      - const matchingStats = docker_stats.find(stats => stats.ID === psContainer.ID)
+
+      //- Only display if there is a matching stats container
+      if matchingStats
+        .container-card
+          //- Docker PS Info
+          .docker-info
+            h3 Docker PS: #{psContainer.Names}
+            table
+              tr
+                th Key
+                th Value
+              each value, key in psContainer
+                tr
+                  td= key
+                  td= value
+
+          //- Docker Stats Info
+          .docker-stats
+            h3 Docker Stats: #{matchingStats.Name}
+            table
+              tr
+                th Key
+                th Value
+              each value, key in matchingStats
+                tr
+                  td= key
+                  td= value
+
+    if jsonData && Object.keys(jsonData).length > 0
+        p(style=`color:${jsonData.status === 'success' ? 'green' : 'red'}; font-size: 18px`) Results : #{jsonData.message}

@@ -1,0 +1,127 @@
+extends ../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Admin Add Pages
+
+  div#form-layout
+    div#select-data
+     label(for="data-type") Choose a Data Type 
+        select(id="data-type" name="data-type" onchange="showMessage()")
+          option(value="", disabled=true, selected=true) -- Select an option --
+          option(value="docker_ps") Docker PS 
+          option(value="docker_stats") Dockder Stats 
+          
+    //- p(class='message' id='message') 
+
+
+    div(id="form-data-ps" style="display:none; flex-direction: column ")
+      //- form(action='/submit' method='POST')
+      form(id="ps-form" method='POST')
+        each value, key in dps
+            label(for=key) #{key}
+            input(type='text' id=key name=key placeholder=value)
+      button(type='submit' id='submit-button-ps') Submit
+    
+    //- div#form-data
+    //- div(id="form-data-stats")
+    div(id="form-data-stats" style="display:none; flex-direction: column ")
+      //- form(action='/submit' method='POST')
+      form(id="stats-form" method='POST')
+        each value, key in stats
+            label(for=key) #{key}
+            input(type='text' id=key name=key placeholder=value)
+      button(type='submit' id='submit-button-stats') Submit
+
+    script.
+        function showMessage() {
+          var selectedValue = document.getElementById('data-type').value;
+          const formDataPS = document.getElementById('form-data-ps');
+          const formDataSTATS = document.getElementById('form-data-stats');
+          var message = '';
+
+          if (selectedValue === 'docker_ps') {
+            formDataSTATS.style.display = 'none';
+            formDataPS.style.display = 'flex';
+          } else if (selectedValue === 'docker_stats') {
+            formDataPS.style.display = 'none';
+            formDataSTATS.style.display = 'flex';
+          } 
+
+
+
+
+          //console.log(dps);
+          //- console.log(stats);
+
+          //- document.getElementById('message').innerText = message;
+          // Display message
+        }
+
+        $('#submit-button-ps').click(function() {
+            console.log('submit ps clikced');            
+
+            event.preventDefault();  // Prevent form submission
+          
+            // Get input values and print them
+            var formData = {};
+            $('#ps-form input').each(function() {
+              var inputName = $(this).attr('name');
+              var inputValue = $(this).val();
+              formData[inputName] = inputValue;  // Store the key-value pairs
+            });
+
+            // Print the form data to the console
+            console.log('Form Input Data:', formData);
+
+            $.ajax({
+               type: 'POST',
+                //- url: '/docker/' + selectedValue, // The dynamic URL based on selected value
+                url: '/docker/1', // The dynamic URL based on selected value
+                data: formData,  // Send the form data as a POST request
+                success: function (response) {
+                  // Handle success response here
+                  alert('Form submitted successfully: ' + response);
+                },
+                error: function (error) {
+                  // Handle error here
+                  alert('An error occurred: ' + error);
+                }
+            });
+        });
+        $('#submit-button-stats').click(function() {
+            console.log('submit stats clikced');            
+
+            event.preventDefault();  // Prevent form submission
+          
+            // Get input values and print them
+            var formData = {};
+            $(' #stats-form input').each(function() {
+              var inputName = $(this).attr('name');
+              var inputValue = $(this).val();
+              formData[inputName] = inputValue;  // Store the key-value pairs
+            });
+
+            // Print the form data to the console
+            console.log('Form Input Data:', formData);
+
+            $.ajax({
+               type: 'POST',
+                //- url: '/docker/' + selectedValue, // The dynamic URL based on selected value
+                url: '/docker/2', // The dynamic URL based on selected value
+                data: formData,  // Send the form data as a POST request
+                success: function (response) {
+                  // Handle success response here
+                  alert('Form submitted successfully: ' + response);
+                },
+                error: function (error) {
+                  // Handle error here
+                  alert('An error occurred: ' + error);
+                }
+            });
+        });
+
+  div#admin-controls
+      a(href='/admin') Go Back To Admin Pages
+      a(href='/') Go Back To Home Page
+      

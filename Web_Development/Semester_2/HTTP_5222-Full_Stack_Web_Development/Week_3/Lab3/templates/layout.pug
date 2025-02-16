@@ -1,0 +1,21 @@
+doctype html
+html 
+  head 
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width,initial-scale=1")
+    //- Home | Test website
+    title #{title} | Test website
+    link(rel="stylesheet", href="/styles.css")
+  body
+    //- header#header is the short form for header(id="header")
+    //- You can also use . for class names (e.g. div.myclass)
+    header#header 
+      h2#site-name 
+        a(href="/") Test website 
+      nav 
+        ul 
+          each link in menu
+            li: a(href=link.path) #{link.name}
+    main#main
+      block layout-content
+    include footer.pug

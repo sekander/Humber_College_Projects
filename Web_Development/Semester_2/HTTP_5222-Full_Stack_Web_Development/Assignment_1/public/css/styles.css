@@ -1,0 +1,170 @@
+body { 
+  font-family: Arial, sans-serif; 
+  margin: 20px; 
+
+  color: #000;
+  background-color:#222;
+}
+h1 { color: #c412129d; }
+/* table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+
+th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }
+th { background-color: #f2f2f2; } */
+
+
+.container-card {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.container-card .docker-info, .container-card .docker-stats {
+  width: 45%;
+}
+table {
+  width: 100%;
+  /* width: 80vw; */
+  border-collapse: collapse;
+  overflow-x: auto;
+}
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+  /* overflow-x: auto; */
+  text-overflow: ellipsis; /* Adds ellipsis for overflow */
+  overflow: hidden; /* Hides overflowing text */
+
+}
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  max-width: 15vw;
+}
+
+#admin-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* #admin-controls a {
+
+} */
+
+#admin-controls a,
+#admin-controls button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  width: 30vw;
+  margin-bottom: 10px; /* Space between each button */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+
+#admin-controls a:hover,
+#admin-controls button:hover {
+  background-color: #45a049; /* Slightly darker green on hover */
+}
+
+#admin-controls a:active,
+#admin-controls button:hover {
+  background-color: #3e8e41; /* Even darker green when clicked */
+}
+
+#select-data {
+  display: flex;
+  flex-direction: column;
+}
+
+#selected-id {
+  color: red;
+}
+
+#selected-name {
+  background: black;
+  color: white;
+}
+
+#delete-section {
+  padding: 10px;
+  background: chocolate;
+}
+
+#radio-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+#radio-buttons:hover {
+  background: red;
+}
+
+#admin-links {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form container styles */
+#form-layout {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90vw;
+  margin-bottom: 1rem;
+}
+
+
+.form-data-ps {
+  display: none;
+  /* display: flex; */
+
+}
+
+.form-data-stats {
+  display: none;
+  /* display: flex; */
+  flex-direction: column;
+
+}
+
+/* Style for each form group */
+/* div {
+} */
+
+/* Label styles */
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Input field styles */
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Focused input field styles */
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+}

@@ -1,0 +1,11 @@
+{
+  "BlockIO": "1.61MB / 8.19kB",
+  "CPUPerc": "0.00%",
+  "Container": "9892260d308d",
+  "ID": "9892260d308d",
+  "MemPerc": "0.29%",
+  "MemUsage": "28.43MiB / 9.508GiB",
+  "Name": "timesheet-app_frontend",
+  "NetIO": "556kB / 1.59MB",
+  "PIDs": "11"
+}

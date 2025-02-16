@@ -1,0 +1,17 @@
+extends common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Lab 4 
+    if movies.length > 0
+        ul
+            each movie in movies
+                li
+                    strong Name: #{movie.title}
+                    | , Year: #{movie.year}, Rating: #{movie.rating}
+    else
+        p No Movies available in the database yet.
+
+
+    if jsonData && Object.keys(jsonData).length > 0
+        p(style=`color:${jsonData.status === 'success' ? 'green' : 'red'}; font-size: 18px`) Results : #{jsonData.message}

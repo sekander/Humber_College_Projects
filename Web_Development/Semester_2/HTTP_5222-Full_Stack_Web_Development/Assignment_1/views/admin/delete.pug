@@ -1,0 +1,87 @@
+extends ../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Admin Delete Page
+    div#delete-section
+     div#select-data
+      label(for="data-type") Choose an ID to Delete 
+      each index in sendData 
+        div#radio-buttons
+          input(type="radio", name="data-type", value=index, id="data-" + index, onchange="showMessage()")
+          label(for="data-" + index)= index
+     div#selected-name
+      p Selected ID: <span id="selected-id">None</span> <!-- This will show the selected value -->
+
+    div#admin-controls
+        button#delete-button DELETE 
+        a(href='/admin') Go Back To Admin Pages
+        a(href='/') Go Back To Home Page
+    script.
+      console.log("NEW Testing");
+      const deleteBttn = document.getElementById("delete-button");
+      let selectedRadioName = '';
+      function showMessage() {
+         const selectedRadio = document.querySelector('input[name="data-type"]:checked');
+         const selectedName = document.getElementById("selected-id");
+
+         console.log(selectedRadio.value);
+
+         // Check if a radio button is selected and update the displayed name
+         if (selectedRadio) {
+             selectedName.innerHTML = selectedRadio.value;
+             selectedRadioName = selectedRadio.value;
+             selectedName.style.color = '#32CD32';  // Change color to green when a radio is selected
+         } else {
+             selectedName.innerHTML = "None";
+         }
+      }
+
+      $('#delete-button').click(function() {
+          console.log('delete clikced');            
+          const selectedRadio = document.querySelector('input[name="data-type"]:checked');
+          console.log(selectedRadio.value);         
+	  
+          const request1 = $.ajax({
+           url: '/docker/1',  // Construct the URL with docker state
+           type: 'DELETE',  // DELETE method
+           data: JSON.stringify({ Names: selectedRadio.value}),  // Send the Name as JSON data
+           contentType: 'application/json',  // Ensure the request body is sent as JSON
+           success: function(response) {
+             console.log('Delete response:', response);  // Log the server response
+             // Handle the response, maybe show a success message or update the UI
+           },
+           error: function(xhr, status, error) {
+             console.error('Delete failed:', error);  // Handle any errors
+           }
+         });
+          
+         const request2 = $.ajax({
+           url: '/docker/2',  // Construct the URL with docker state
+           type: 'DELETE',  // DELETE method
+           data: JSON.stringify({ Name: selectedRadio.value}),  // Send the Name as JSON data
+           contentType: 'application/json',  // Ensure the request body is sent as JSON
+           success: function(response) {
+             console.log('Delete response:', response);  // Log the server response
+             // Handle the response, maybe show a success message or update the UI
+           },
+           error: function(xhr, status, error) {
+             console.error('Delete failed:', error);  // Handle any errors
+           }
+         });
+
+         //Wait for both ajax requests to complete before reloading page
+         $.when(request1, request2).done(function() {
+           console.log("Both ajax requests completed");
+           location.reload(); // This will refresh the page when the button is clicked
+         });
+		
+         //location.reload(); // This will refresh the page when the button is clicked
+      });
+
+	
+
+	
+
+
+

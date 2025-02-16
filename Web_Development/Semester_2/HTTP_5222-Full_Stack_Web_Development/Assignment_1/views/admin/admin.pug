@@ -1,0 +1,52 @@
+extends ../common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Admin Pages
+
+    div#admin-controls
+      //- button UPDATE
+      button#update-button UPDATE
+      script.
+        $(document).ready(function() {
+          $('#update-button').click(function() {
+
+            const request1 = $.ajax({
+               type: 'PUT',
+                //- url: '/docker/' + selectedValue, // The dynamic URL based on selected value
+                url: '/docker/1', // The dynamic URL based on selected value
+                 success: function(response) {
+                    //alert('API response: ' + response);  // Show response after successful request
+                 },
+                 error: function(error) {
+                    alert('An error occurred: ' + error.responseText); // Display error message if something goes wrong
+                 }
+            });
+            
+            const request2 = $.ajax({
+               type: 'PUT',
+                //- url: '/docker/' + selectedValue, // The dynamic URL based on selected value
+                url: '/docker/2', // The dynamic URL based on selected value
+                 success: function(response) {
+                    //alert('API response: ' + response);  // Show response after successful request
+                 },
+                 error: function(error) {
+                    alert('An error occurred: ' + error.responseText); // Display error message if something goes wrong
+                 }
+            });
+             //Wait for both ajax requests to complete before reloading page
+            $.when(request1, request2).done(function() {
+              console.log("Both ajax requests completed");
+              alert('Update button clicked using jQuery!');
+              window.location.href = '/'; // This will refresh the page when the button is clicked
+            });
+
+          });
+        });
+
+      a(href='/add') ADD 
+      a(href='/delete') DELETE 
+      a(href='/') Go Back To Home Page
+
+    //- div#admin-links    
+      a(href='/') Go Back To Home Page
