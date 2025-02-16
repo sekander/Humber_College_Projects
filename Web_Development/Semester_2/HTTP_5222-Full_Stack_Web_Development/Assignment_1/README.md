@@ -62,6 +62,17 @@ The helper functions handle the interaction with MongoDB, including:
 - **`updateFullDocument(collectionName, document)`**: Replaces all documents in the specified collection with new data.
 - **`deleteDocument(collectionName, document)`**: Deletes a document from the specified collection.
 
+## Deployment
+You can view a live demo of this project hosted on Google Cloud at the following URL:
+
+[Live Demo on Google Cloud](http://35.184.194.219/php/http_5225/assignment_1/)
+
+You can view a live demo of this project hosted on Personal Web Server at the following URL:
+
+[Live Demo on Personal Web Server](https://nahid-sekander.duckdns.org/projects/php/Assignment_1/)
+
+
+
 ## Docker Service Views
 
 This project has several views that allow users to interact with Docker containers via a web interface. Below is a brief summary of each view and its functionality.
