@@ -21,3 +21,6 @@ This is a web page designed to display a list of schools in a responsive grid fo
 - The card displays the **Board**, **Academic Year**, **Board No**, **Language**, and **School Type**.
 - On hover, the card's border color animates, growing and shrinking.
 - Each badge has a dynamic color depending on the **Language** and **School Type**.
+
+## Live Demo:
+[Visit HTTP 5225 Lab 6 Demo](https://nahid-sekander.duckdns.org/projects/php/Week_6/)
