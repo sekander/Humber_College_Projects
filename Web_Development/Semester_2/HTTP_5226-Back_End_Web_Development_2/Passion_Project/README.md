@@ -1,97 +1,88 @@
-```markdown
 # Magic: The Gathering (MTG) Deck Management Application & Passion Project API Overview
 
-The **MTG Deck Management Application** is a comprehensive web-based platform specifically designed for **Magic: The Gathering (MTG)** players. It allows users to efficiently manage their decks, cards, and player profiles in one place. Powered by the **Passion Project API**, which is built using **ASP.NET Core**, the platform handles all the backend operations, including CRUD (Create, Read, Update, Delete) functionalities for players, decks, and cards. One of the most impressive features of this application is its **advanced card search and filtering system**, which allows players to sift through a vast database of **over 30,000 MTG cards** quickly and accurately. This system provides real-time search results, comprehensive filtering options, and smooth pagination, making it easy for players to browse, filter, and interact with their entire collection.
+The **MTG Deck Management Application** is a web-based platform designed for **Magic: The Gathering (MTG)** players to efficiently manage their decks, cards, and profiles. Powered by the **Passion Project API** built with **ASP.NET Core**, the platform supports full CRUD (Create, Read, Update, Delete) operations for players, decks, and cards. A standout feature is its **advanced card search and filtering system**, which enables players to explore a database of over **30,000 MTG cards** quickly and accurately. With real-time search results, advanced filtering options, and smooth pagination, users can easily manage and interact with their collections.
 
-The application enables MTG players to have full control over their decks and cards, allowing for efficient management, quick searches, and easy browsing of large collections. Whether you're a casual player or a competitive deck builder, this platform is designed to make organizing, managing, and exploring your MTG collection as easy as possible.
+Whether you are a casual player or a competitive deck builder, the MTG Deck Management Application provides efficient tools for organizing and exploring your MTG collection. Players have full control over deck creation, card management, and real-time search, ensuring an enjoyable user experience when browsing and building decks.
 
 ## Key Features
 
 ### 1. **Player Management**
-The **Player Management** feature allows players to **log in** securely to the application, providing access to their personal deck collections and card data. Players are currently unable to create new profiles or update their existing ones, but this feature is planned for future updates, allowing users to update their personal information such as name and email. This addition will improve the player experience by offering more personalized management.
+Players can securely log in to access their decks and card collections. While profile creation and updating are not available at this time, these features will be introduced in future updates to offer more personalized management options.
 
 ### 2. **Deck Management**
-Players can create, update, and delete their decks, organizing their MTG cards into specific collections based on their strategies or interests. The **Deck Management** feature enables users to not only build new decks but also to explore and manage existing ones. This feature is designed to make deck-building easy by allowing players to manage card lists, view deck compositions, and arrange their cards for optimal gameplay.
+Players can create, edit, and manage their decks. This feature allows users to build new decks, organize existing ones, and optimize card selections for better gameplay strategies.
 
 ### 3. **Card Management**
-All MTG cards are available for viewing through the **Card Management** system. The application displays detailed information about each card, including the card's name, description, image, type, rarity, and various other attributes. This makes it easy for players to access the card's relevant details, helping them make informed decisions when managing their collection. Cards can be viewed individually or as part of a deck.
+Players can view detailed information about each card in their collection. The application displays attributes such as name, description, image, type, rarity, and more, enabling users to make informed decisions while managing their cards.
 
 ### 4. **Card Search & Filtering**
-One of the core functionalities of the MTG Deck Management Application is the **Card Search & Filtering** system, which enables players to efficiently search through the entire database of over **30,000 cards**. The search feature offers a wide range of filtering options, allowing players to search by card type, color, mana cost, card attributes, and more. 
+The core functionality of the MTG Deck Management Application is the **Card Search & Filtering** system, allowing players to search over **30,000 cards** using a variety of filters:
 
-    - **Search Bar**: The application’s search bar allows players to type in specific keywords to find cards based on attributes such as name, description, or other text-based filters. As the player types, the search results are filtered in **real-time**, providing instant feedback.
-    - **Advanced Filters**: Players can further refine their search using advanced filters. These filters include card types (Creature, Sorcery, Artifact, etc.), colors (Red, Blue, Green, etc.), mana costs (One Mana, Two Mana, etc.), and card power/toughness (e.g., Power 4, Toughness 3). These filters help players narrow down search results to find exactly what they need.
-    - **Pagination**: With over 30,000 cards in the database, it would be overwhelming for players to browse through all the results at once. To solve this issue, the application implements **pagination**. This ensures that the search results are split into manageable chunks, and players can easily navigate between pages using **Next** and **Prev** buttons.
+   - **Search Bar**: Real-time filtering of cards based on keywords such as name, description, or other text attributes.
+   - **Advanced Filters**: Refine searches by card type (Creature, Sorcery, Artifact), color, mana cost, power/toughness, and more.
+   - **Pagination**: Search results are paginated for easier browsing and navigation.
 
 ### 5. **Pagination**
-Given the vast amount of data in the database, the **Pagination** feature plays a crucial role in improving user experience. Rather than displaying all 30,000+ cards at once, the application divides the results into smaller pages that can be navigated through. This helps in maintaining performance and ensures a smooth and quick browsing experience.
+With the vast database of cards, **pagination** ensures a smooth browsing experience. Results are split into pages, allowing players to navigate large datasets efficiently and without performance issues.
 
 ---
 
 ## Passion Project API Features
 
-The **Passion Project API** serves as the backbone of the **MTG Deck Management Application**, handling all interactions with the MTG card database and managing player profiles and deck operations. This robust API provides several critical features:
+The **Passion Project API** serves as the backend for the MTG Deck Management Application, handling all interactions with the MTG card database and managing player profiles and deck operations. The API offers several key features:
 
 ### 1. **Login Functionality**
-The **Login** system allows players to securely log into the application using authentication mechanisms. This ensures that users can safely access their profiles, decks, and card collections without worrying about unauthorized access. While currently, users cannot create new profiles or update existing ones, future updates will enable this feature, adding more flexibility to the platform.
+Players securely log in using authentication mechanisms to access their decks and profiles. While profile creation and updating are not yet available, future updates will support these features.
 
 ### 2. **Deck Management**
-The API enables players to create, edit, and delete decks. Decks can contain many cards, and the API supports the relationship between decks and cards, ensuring players can build complex decks with different combinations. Whether it's creating a new deck or updating an existing one, the system handles it efficiently.
+The API allows players to create, edit, and delete decks. It supports the relationship between decks and cards, enabling users to build complex decks with a variety of cards.
 
 ### 3. **Card Management**
-The **Card Management** feature within the API allows full CRUD functionality for cards. This means players can retrieve, update, and delete card entries, making sure that card data is always accurate and up-to-date. It also supports querying cards based on various filters such as card type, rarity, mana cost, and more.
+The **Card Management** functionality enables full CRUD operations for cards, ensuring that data is always accurate and up-to-date. Users can search, update, and delete card entries based on multiple attributes like type, rarity, and mana cost.
 
 ### 4. **Search & Filtering**
-The API supports **advanced search and filtering**. This allows players to search for cards based on various attributes, such as type, color, rarity, mana cost, and much more. This backend search system is seamlessly integrated with the frontend to ensure that users receive fast, real-time results when they search for specific cards.
+The backend supports **advanced search and filtering**, ensuring fast, real-time card searches based on attributes such as type, color, rarity, and more.
 
 ### 5. **Data Integrity & Validation**
-To maintain the quality of data in the database, the API performs validation checks before creating or updating any entries (decks, cards, players). This ensures that data is consistent and prevents duplicates, keeping the database clean and organized.
+The API performs data validation to ensure consistency and avoid duplicates, keeping the database clean and organized.
 
 ### 6. **Logging**
-All actions within the system, such as creating, updating, or deleting players, decks, or cards, are logged for future debugging and tracking. This enables efficient troubleshooting and system monitoring.
+The system logs all user actions (creating, updating, or deleting data) for debugging and system monitoring purposes.
 
 ---
 
 ## Card Search & Filtering System
 
-The **Card Search & Filtering System** is one of the most powerful and essential features of the MTG Deck Management Application, especially considering the large database containing over **30,000 card entries**. This system allows players to find specific cards quickly by narrowing down the search results with multiple filters.
+The **Card Search & Filtering System** is one of the key features of the application, especially considering the extensive database of **30,000+ cards**. This system is designed to help players find specific cards quickly and efficiently:
 
-### Key Features of the Search & Filtering System:
-
-- **Search Bar**: As players type in the search bar, the results are filtered in real-time. Players can search for cards based on specific criteria such as the card name, description, or other text attributes.
-- **Advanced Filters**: The application provides several advanced filtering options. These filters include card types (such as Creature, Artifact, Sorcery), colors (Red, Green, Blue, etc.), mana costs (1 Mana, 2 Mana, 3 Mana, etc.), power and toughness values (e.g., Power 4, Toughness 2), and much more. For instance, players could search for "Legendary Creatures with Power 4" or "Cards with a Mana Cost of 3".
-- **Pagination**: To avoid overwhelming the user, search results are split into pages. This makes it easy for players to navigate through a large number of cards without encountering performance issues.
-
-The **Card Search & Filtering System** is designed to be efficient and scalable, ensuring that players can search through vast amounts of data without experiencing slowdowns. The real-time filtering capability ensures that players can immediately see results as they type, providing a seamless user experience.
+- **Search Bar**: Real-time results appear as players type keywords to search cards by name, description, or other attributes.
+- **Advanced Filters**: Users can refine searches using filters like card type (Creature, Sorcery), color (Red, Green, etc.), mana cost, power/toughness, and more.
+- **Pagination**: To enhance user experience, the results are split into manageable pages, making it easy to browse large sets of data.
 
 ### Advanced Search System
+Future updates will include additional filters, such as:
 
-While the current search system is based on basic attributes like card name and description, the platform is designed to support more advanced search functionality in the future. Upcoming updates will include:
-
-- **Mana Cost Range**: Search cards within a specified range of mana costs.
-- **Card Type**: Filter based on more specific card types like Creature, Sorcery, Artifact, etc.
-- **Rarity**: Filter based on card rarity (Common, Uncommon, Rare, Mythic).
-- **Abilities**: Additional filters will allow searching for cards with specific abilities like flying, lifelink, etc.
-
-These advanced filters will offer players even more precision when searching for cards, enhancing their deck-building process and making it easier to find the exact card they need.
+- **Mana Cost Range**: Filter cards by mana cost range.
+- **Card Type**: Filter based on specific card types.
+- **Rarity**: Filter by card rarity (Common, Uncommon, Rare, Mythic).
+- **Abilities**: Add filters for specific card abilities like flying or lifelink.
 
 ---
 
 ## Live Demo
 
-To showcase the **MTG Deck Management Application** and its features, a **live demo** is available for users to try. The demo highlights the following features:
+To experience the MTG Deck Management Application firsthand, a **live demo** is available for users. The demo showcases the following features:
 
-[Live Demo on Personal Web Server](https://nahid-sekander.duckdns.org/mtg-deck-builder)
+- **Login**: Secure login to access profiles and decks.
+- **Deck Management**: Create and manage decks with an intuitive interface.
+- **Card Search & Filtering**: Experience real-time search and advanced filtering for precise card selection.
+- **Pagination & Navigation**: Browse large datasets efficiently with pagination.
 
+Visit the **[Live Demo Link]** to try the application and explore its features.
 
 ---
 
 ## Conclusion
 
-The **MTG Deck Management Application**, powered by the **Passion Project API**, offers a robust and user-friendly platform for managing **Magic: The Gathering** cards and decks. With features like **real-time card search**, **advanced filtering**, **pagination**, and **secure login**, the platform is optimized for handling large datasets and providing a smooth user experience. Players can easily
-
- organize and manage their collections, search for cards based on various criteria, and build custom decks. Future updates will bring additional features like **advanced search filters**, **profile management**, and **enhanced performance** to further improve the platform.
-
-This application is an essential tool for MTG enthusiasts, offering an easy-to-use interface, powerful card management features, and seamless integration with the backend API to create an efficient and enjoyable user experience.
-```
+The **MTG Deck Management Application**, powered by the **Passion Project API**, is a robust and user-friendly platform for managing **Magic: The Gathering** cards and decks. With powerful features such as **real-time card search**, **advanced filtering**, **pagination**, and **secure login**, the platform offers a smooth user experience and efficient data management. As future updates introduce **advanced search filters** and **profile management**, the application will continue to evolve, providing a comprehensive tool for MTG enthusiasts.
 
