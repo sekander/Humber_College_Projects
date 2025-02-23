@@ -63,13 +63,10 @@ The helper functions handle the interaction with MongoDB, including:
 - **`deleteDocument(collectionName, document)`**: Deletes a document from the specified collection.
 
 ## Deployment
-You can view a live demo of this project hosted on Google Cloud at the following URL:
-
-[Live Demo on Google Cloud](http://35.184.194.219/php/http_5225/assignment_1/)
 
 You can view a live demo of this project hosted on Personal Web Server at the following URL:
 
-[Live Demo on Personal Web Server](https://nahid-sekander.duckdns.org/projects/php/Assignment_1/)
+[Live Demo on Personal Web Server](https://nahid-sekander.duckdns.org/docker-service)
 
 
 
