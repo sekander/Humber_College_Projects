@@ -78,7 +78,8 @@ To experience the MTG Deck Management Application firsthand, a **live demo** is 
 - **Card Search & Filtering**: Experience real-time search and advanced filtering for precise card selection.
 - **Pagination & Navigation**: Browse large datasets efficiently with pagination.
 
-Visit the **[Live Demo Link]** to try the application and explore its features.
+Visit the [Live Demo on Personal Web Server](https://nahid-sekander.duckdns.org/mtg-deck-builder)
+ to try the application and explore its features.
 
 ---
 
