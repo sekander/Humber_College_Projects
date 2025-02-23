@@ -1,0 +1,143 @@
+@{
+    Layout = "_Layout";  // This tells the view to use the _Layout.cshtml file
+    string deckID = ViewData["DeckID"] as string; // Retrieve the subtitle from ViewData
+}
+
+@section Styles {
+<style>
+
+    #deck-info {
+        background-color: rgba(8, 157, 11, 0.372);
+    }
+    #deck-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Space between cards */
+        justify-content: flex-start; /* Align cards from the start */
+    }
+
+    .card {
+        width: 18rem; /* Set the card width */
+        margin: 10px; /* Optional margin for spacing between cards */
+        flex: 1 1 calc(25% - 20px); /* Each card will take up 25% of the row's width, accounting for gaps */
+        box-sizing: border-box; /* Ensure padding/border are included in the width */
+    }
+
+
+    @* #deck-cards{
+    background-color: rgba(202, 7, 7, 0.349);
+    display: flex;
+    flex-wrap: wrap;
+      gap: 20px; /* Space between items */
+
+    } *@
+</style>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Deck View :  <strong id="deck-id">@deckID</strong> </h1>
+    @if (!string.IsNullOrEmpty(deckID))
+    {
+        <div id="deck-description" class="alert alert-success">
+            <p>@deckID</p> <!-- Render the subtitle value -->
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <p>No Deck ID available</p>
+        </div>
+    }
+    <div class="user-view">
+        <div id="deck-info" style="display: none;">
+
+        </div>
+        <div id="deck-cards">
+
+        </div>
+    </div>
+
+    <script>
+    const deckIDHTML = document.getElementById("deck-id");
+    const deckDescription = document.getElementById("deck-description");
+    const deckInfo = document.getElementById("deck-info");
+    const deckCards = document.getElementById("deck-cards");
+    let decksHTML = ""; // Initialize a variable to hold all the card HTML
+    let deckInfoHTML = "";
+
+    $.ajax({
+        url:`/api/deck/${deckIDHTML.textContent}`,
+        method: 'get',
+        success: function(response) {
+            let deckInfoHTML = `
+                <h5>${response.value.id}</h5>
+                <h5>${response.value.playerID}</h5>
+                <h5>${response.value.name}</h5>
+                <h5>${response.value.description}</h5>
+            `;
+            console.log(response);
+            deckInfo.innerHTML = deckInfoHTML; 
+            deckIDHTML.innerHTML = response.value.name;
+            deckDescription.innerHTML = response.value.description;
+
+        },
+        else: function(xhr, status, error) {
+            console.error("Error fetching deck cards:", error);
+        }
+    });
+
+
+
+
+
+    $.ajax({
+        url: `/api/deck/${deckIDHTML.textContent}/allcards`,  // this is the endpoint you defined in your controller
+        method: 'get',
+        success: function(response) {
+            //console.log("player decks card id retrieved successfully:", response);
+            // If the response is successful and contains decks, you can display them
+            if (response && response.length > 0) {
+                // Loop through all card IDs and fetch their details
+                for (let i = 0; i < response.length; i++) {
+                    let cardID = response[i];
+
+                    $.ajax({
+                        url: `/api/card/${cardID}`,  // this is the endpoint you defined in your controller
+                        method: 'get',
+                        success: function(response) {
+                            //console.log("card retrieved successfully:", response);
+                            console.log("Card ID retrieved successfully:", response.value.id);
+                            console.log("Card Name retrieved successfully:", response.value.name);
+                            console.log("Card Description retrieved successfully:", response.value.description);
+                            console.log("Card Image URL retrieved successfully:", response.value.imageUrl);
+
+                            cardHTML = `
+                                <div class="card" style="width: 18rem; margin: 10px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${response.value.name}</h5>
+                                        <!-- <img class="mtg-card-view" src=" ${response.value.imageUrl}" /> -->
+                                        <img class="mtg-card-view" src=" ${response.value.imageUrl ? response.value.imageUrl : '/assets/mtg.png'}" />
+                                        <h6 class="card-subtitle mb-2 text-muted">${response.value.id}</h6>
+                                        <p class="card-text">${response.value.description}</p>
+                                    </div>
+                                </div>
+                            `;
+
+                            // Append the card HTML to the cardsHTML variable
+                            decksHTML += cardHTML;
+                            deckCards.innerHTML = decksHTML;
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching card details:", error);
+                        }
+                    });
+                }
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching deck cards:", error);
+        }
+    });
+    </script>
+</div>

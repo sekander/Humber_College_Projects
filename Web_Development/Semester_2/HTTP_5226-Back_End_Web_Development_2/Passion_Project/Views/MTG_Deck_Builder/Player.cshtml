@@ -1,0 +1,324 @@
+@{
+    Layout = "_Layout";  // This tells the view to use the _Layout.cshtml file
+    string matchedPlayerJson = ViewData["mtg_player"] as string;
+}
+@section Styles {
+<style>
+    @* .user-view {
+    background-color: rgba(0, 0, 0, .05);
+    display: flex;
+    flex-direction: row;
+    } *@
+
+    #player-info {
+    background-color: rgba(8, 157, 11, 0.372);
+    }
+
+
+
+
+
+        /* Player info container styling */
+        #player-info {
+            background-color: rgba(8, 157, 11, 0.372);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: #fff;
+        }
+
+        #player-info h5 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        #player-decks {
+            display: flex;
+            flex-wrap: wrap;
+            @* gap: 20px; /* Space between cards */ *@
+            justify-content: center; /* Align cards from the start */
+            @* display: grid; *@
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+            padding: 10px;
+        }
+
+        /* Special "deck box" style */
+        .deck-card {
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f0f8ff, #fae2b1); /* Gradient background */
+            border: 3px solid #f4c542; /* Highlight border */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow for the "deck box" effect */
+            overflow: hidden;
+            height: 350px;  /* Increased height for better visibility */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+
+        .deck-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); /* Enhanced hover effect */
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card-subtitle {
+            font-size: 16px;
+            color: #6c757d;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #555;
+            flex-grow: 1; /* Allow the description to grow and fill remaining space */
+            overflow-y: auto; /* Allow scrolling for long descriptions */
+        }
+
+
+
+
+</style>
+}
+<div class="text-center">
+    <h1 id="player-title" class="display-4">Player</h1>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    @if (ViewData["Message"] != null)
+    {
+        <div class="alert alert-success">
+            @ViewData["Message"]
+        </div>
+    }
+    <div class="user-view">
+        <div style="display: none;" id="player-info">
+
+        </div> 
+        <div id="player-decks">
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        // Check if the matchedPlayerJson exists
+        var matchedPlayer = @Html.Raw(matchedPlayerJson ?? "null");
+        const playerInfo = document.getElementById("player-info");
+        const playerTitle = document.getElementById("player-title");
+        const playerDecks = document.getElementById("player-decks");
+        let lastDeckID = 0;
+        let cardsHTML = ""; // Initialize a variable to hold all the card HTML
+        let playerInfoHTML = "";        
+        let renderedDecks = [];  // Array to store the IDs of decks already rendered
+
+        if (matchedPlayer) {
+            // If matchedPlayer is not null, you can access it as a JavaScript object
+            //console.log("Matched Player:", matchedPlayer);
+            // For example, display their name and email
+            @* alert("Player Found: " + matchedPlayer.Name + " - " + matchedPlayer.Email); *@
+            console.log("Matched Player:", matchedPlayer.Name);
+            @* $('h1.display-4').text('Welcome, ' + matchedPlayer.Name + '!'); *@
+            playerTitle.textContent = 'Welcome, ' + matchedPlayer.Name + '!';
+            let playerInfoHTML = `
+                @* <h5>${matchedPlayer.ID}</h5> *@
+                @* <h3>${matchedPlayer.Name}</h3> *@
+                @* <h3>${matchedPlayer.Email}</h3> *@
+            `;
+            playerInfo.innerHTML = playerInfoHTML; 
+
+             // Now make the AJAX call to get the player's decks
+            $.ajax({
+                url: '/get-decks',  // This is the endpoint you defined in your controller
+                method: 'GET',
+                success: function(response) {
+                    //console.log("Player decks retrieved successfully:", response);
+
+                    // If the response is successful and contains decks, you can display them
+                    if (response && response.length > 0) {
+                        const paresedJSON = JSON.parse(response);
+                        let cardHTML = '<div class="card-deck-container">';  // Start with the container div
+                        for (let i = 0; i < paresedJSON.length; i++) 
+                        {
+                            let deck = paresedJSON[i];
+
+                            // Skip this deck if its ID has already been rendered
+                            if (renderedDecks.includes(deck.ID)) {
+                                continue;  // Skip to the next iteration
+                            }
+
+                             // Add the deck ID to the renderedDecks array to keep track of it
+                            renderedDecks.push(deck.ID);
+
+
+                            //let cardHTML = `
+                            cardHTML = `
+                                    <div class="card deck-card" style="width: 18rem; margin: 10px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${deck.Name}</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">${deck.ID}</h6>
+                                            <p class="card-text">${deck.Description}</p>
+                                        </div>
+                                        <!-- <button id="deck-delete-${deck.ID}">Delete Deck</button> -->
+                                        <button id="deck-delete-${deck.ID}" class="btn btn-danger btn-delete">Delete Deck</button>
+                                    </div>
+                            `;
+                            cardsHTML += cardHTML;
+                            if(i == paresedJSON.length - 1)
+                            {
+                                lastDeckID = deck.ID;
+                            }
+
+                        }
+                        cardHTML += `
+                                <div class="card deck-card" style="width: 18rem; margin: 10px;">
+                                    <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px; background-color: #f1f1f1; border: 2px dashed #ccc;">
+                                        <span id="add-deck" style="font-size: 3rem; color: #ccc;">+</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        cardsHTML += cardHTML;
+                        playerDecks.innerHTML = cardsHTML;
+
+                        @* const decks = document.querySelectorAll(".card"); *@
+                        const decks = document.querySelectorAll(".card-body");
+            
+                        decks.forEach(deck =>{
+                            //console.log(deck);
+                            deck.addEventListener('click', (event) => 
+                            {
+            
+                                const cardContent = event.currentTarget.innerHTML;
+                                if(cardContent.includes("+"))
+                                {
+
+                                    //This needs editting
+                                    console.log("Add Deck clicked.");
+                                    $.ajax({
+                                        url: '/api/deck',  // This is the endpoint you defined in your controller
+                                        method: 'POST',
+                                        contentType: 'application/json',  // Ensure the request is in JSON format
+                                        data: JSON.stringify({
+                                            id: lastDeckID + 1,
+                                            playerID: matchedPlayer.ID,
+                                            name: 'TEST Deck',
+                                            description: 'New TEST Deck Description'
+                                        }),
+                                        success: function(response) {
+                                            console.log("Deck added successfully:", response);
+                                            // Redirect to the deck view page
+                                            window.location.href = `/PlayerView`;
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error("Error adding deck:", error);
+                                            $('#decks-container').html('<p>An error occurred while adding the deck.</p>');
+                                        }
+                                    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    @* window.location.href = `/DeckView`; *@
+                                    @* return; *@
+                                } else {
+                                    console.log("Card clicked. Contents:", cardContent);
+                            
+                                    // Optionally, if you want to extract specific parts of the content, you can do it like this
+                                    const cardTitle = event.currentTarget.querySelector(".card-title").textContent;
+                                    const cardSubtitle = event.currentTarget.querySelector(".card-subtitle").textContent;
+                                    const cardDescription = event.currentTarget.querySelector(".card-text").textContent;
+                            
+                                    console.log("Deck Title:", cardTitle);
+                                    console.log("Deck Subtitle:", cardSubtitle);
+                                    console.log("Deck Description:", cardDescription);
+
+                                    const encodeSubtitle = encodeURIComponent(cardSubtitle);
+
+                                    //Redirect to the controller action
+                                    window.location.href = `/DeckView?subtitle=${encodeSubtitle}`;
+                                }
+                            });
+
+
+
+
+                        });
+
+                        const deleteDeckButtons = document.querySelectorAll(".btn-delete"); 
+                        deleteDeckButtons.forEach(deleteDeckButton => {
+                            deleteDeckButton.addEventListener('click', (event) => {
+                                console.log("Delete button clicked.");
+                                // Get the deck ID from the button ID
+                                const deckID = event.currentTarget.id.split('-')[2];
+                                console.log("Deck ID to delete:", deckID);
+                                $.ajax({
+                                    url: `/api/deck/${deckID}`,  // This is the endpoint you defined in your controller
+                                    method: 'DELETE',
+                                    success: function(response) {
+                                        console.log("Deck deleted successfully:", response);
+                                        // Refresh the page to show the updated list of decks
+                                        window.location.href = `/PlayerView`;
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error("Error deleting deck:", error);
+                                        $('#decks-container').html('<p>An error occurred while deleting the deck.</p>');
+                                    }
+                                })
+                                // Call the deleteDeck function with the deck ID
+                                //deleteDeck(deckID);
+                            });
+                        });
+
+                    } else {
+                        $('#decks-container').html('<p>No decks found for this player.</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching player decks:", error);
+                    $('#decks-container').html('<p>An error occurred while retrieving the decks.</p>');
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+        } else {
+            console.log("No player found.");
+        }
+    </script>
+
+
+
+    
+</div>

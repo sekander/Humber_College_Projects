@@ -17,3 +17,47 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = /home/fnky/C0de/School/Backend_Web_2/Passion_Project
 build_property._RazorSourceGeneratorDebug = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Views/MTG_Deck_Builder/Card.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTVRHX0RlY2tfQnVpbGRlci9DYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Views/MTG_Deck_Builder/Deck.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTVRHX0RlY2tfQnVpbGRlci9EZWNrLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Views/MTG_Deck_Builder/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTVRHX0RlY2tfQnVpbGRlci9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Views/MTG_Deck_Builder/Player.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTVRHX0RlY2tfQnVpbGRlci9QbGF5ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/fnky/C0de/School/Backend_Web_2/Passion_Project/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-sj2ue9trrk

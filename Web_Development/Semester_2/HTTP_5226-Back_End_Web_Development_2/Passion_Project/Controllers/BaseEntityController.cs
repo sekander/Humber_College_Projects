@@ -218,10 +218,10 @@ public class BaseEntityController<T> : ControllerBase where T : class
             }
 
             // Validation for empty or invalid IDs
-            if( entity is Player _player && _player.ID == 0
-                || entity is Card _card && _card.ID == 0
-                || entity is Deck _deck && _deck.ID == 0
-                || entity is Deck __deck && __deck.PlayerID == 0 )
+            if( entity is Player _player && _player.ID <= 0
+                || entity is Card _card && _card.ID <= 0
+                || entity is Deck _deck && _deck.ID <= 0
+                || entity is Deck __deck && __deck.PlayerID <= 0 )
                 // || entity is Deck _deck && _deck.ID == 0 && _deck.PlayerID == 0 )
             {
                 return_message = entity is Deck ? "Deck ID or Player ID cannot be 0" : "ID cannot be 0"; 

@@ -1,0 +1,54 @@
+- add more filter for card search 
+- show statistics to player deck 
+
+- create loading animation when card is searched and loading animation when deck is loading all cards 
+- add more custom colour themes to player view
+- create a card flip for hover effect 
+- customize player deck view with different colours 
+
+
+
+
+
+- Create an deck button and delete deck button for player deck view --- Need to fix
+
+Planeswalker
+
+Filter By:
+
+Artifact Creature
+Enchantment // Creature
+Enchantment // Instant
+Enchantment // Sorcery
+ Instant Creature
+ Legendary Artifact
+ Legendary Artifact Creature
+ Legendary Creature
+ | Legendary Enchantment                                                                  |
+| Legendary Instant                                                                      |
+| Legendary Sorcery                                                                      |
+ Sorcery // Creature| 
+ Sorcery // Instant                                                                     |
+| Token Artifact                                                                         |
+ Token Artifact Creature
+ Token Creature 
+ Token Enchantment Artifact Creature
+ Token Enchantment Creature
+ | Token Legendary Artifact                                                               |
+ Token Legendary Artifact Creature
+ Token Legendary Creature
+ Token Legendary Enchantment
+
+
+
+Card Type ->
+Artifact, Battle, Creature, Emblem, Enchantment, Instant, Sorcery, Token, Legendary
+
+Colors ->
+
+Mana Cost ->
+
+Power ->
+
+Toughness ->
+

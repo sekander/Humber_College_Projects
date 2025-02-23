@@ -31,6 +31,12 @@ public class DeckController : BaseEntityController<Deck>
         }
     }
 
+    [HttpGet("/extra")]
+    public async Task<IActionResult> test(){
+        Console.WriteLine("TESTING!!!");
+        return Ok();
+    }
+
     /// <summary>
     /// Retrieves all decks from the database.
     /// </summary>
@@ -155,6 +161,7 @@ public class DeckController : BaseEntityController<Deck>
     /// </example>
     [HttpPost("card")]
     public async Task<IActionResult> CreateCardEntity([FromBody] CardDeck cardDeck)
+    // public async Task<IActionResult> CreateCardEntity([FromBody] CardDeck cardDeck, [FromQuery] bool deleteCard = false)
     {
         // Check if the Deck exists
         var deck = await base.GetService().GetDecks().FindAsync(cardDeck.DeckID);
@@ -177,15 +184,13 @@ public class DeckController : BaseEntityController<Deck>
 
         if (existingCardDeck != null)
         {
+            Console.WriteLine("Card Already Exists");
             // If the CardDeck already exists, return a conflict response
             return Conflict(new
             {
                 message = $"Card with ID {cardDeck.CardID} already exists in Deck with ID {cardDeck.DeckID}."
             });
         }
-
-
-
 
         // Add the CardDeck entry
         await base.GetService().GetCardDecks().AddAsync(cardDeck);
@@ -194,8 +199,79 @@ public class DeckController : BaseEntityController<Deck>
         await base.GetService().SaveChangesAsync();
 
         // Return the created CardDeck object with status code 201
-        return CreatedAtAction(nameof(GetEntity), new { id = cardDeck.DeckID }, cardDeck);
+        // return CreatedAtAction(nameof(GetEntity), new { id = cardDeck.DeckID }, cardDeck);
+        return Ok(new
+        {
+            message = $"Card with ID {cardDeck.CardID} added to Deck with ID {cardDeck.DeckID}."
+        });
     }
+
+    /// <summary>
+    /// Deletes a CardDeck relationship, unlinking a card from a deck.
+    /// </summary>
+    /// <param name="deckID">The ID of the deck.</param>
+    /// <param name="cardID">The ID of the card.</param>
+    /// <returns>Returns a status indicating the result of the deletion.</returns>
+    /// <example>
+    /// DELETE /api/deck/card?deckID=1&cardID=5
+    /// Response:
+    /// { "message": "Card with ID 5 deleted from Deck with ID 1." }
+    /// </example>
+    [HttpDelete("card")]
+    // public async Task<IActionResult> DeleteCardEntity([FromQuery] int deckID, [FromQuery] int cardID)
+    public async Task<IActionResult> DeleteCardEntity([FromBody] CardDeck cardDeck)
+    {
+        // Check if the Deck exists
+        var deck = await base.GetService().GetDecks().FindAsync(cardDeck.DeckID);
+        if (deck == null)
+        {
+            return NotFound($"Deck with ID {cardDeck.DeckID} not found.");
+        }
+
+        // Check if the Card exists
+        var card = await base.GetService().GetCards().FindAsync(cardDeck.CardID);
+        if (card == null)
+        {
+            return NotFound($"Card with ID {cardDeck.CardID} not found.");
+        }
+
+        // Check if the CardDeck relationship exists
+        var existingCardDeck = await base.GetService().GetCardDecks()
+            .FirstOrDefaultAsync(cd => cd.DeckID == cardDeck.DeckID && cd.CardID == cardDeck.CardID);
+
+        if (existingCardDeck == null)
+        {
+            return NotFound($"Card with ID {cardDeck.CardID} is not associated with Deck with ID {cardDeck.DeckID}.");
+        }
+        // else {
+
+        //     Console.WriteLine("Card ID " + cardDeck.CardID   );
+        //     // If the CardDeck already exists, return a conflict response
+        //     return Conflict(new
+        //     {
+        //         message = $"Card with ID {cardDeck.CardID} already exists in Deck with ID {cardDeck.DeckID}."
+        //     });
+        // }
+
+        //Check if card is in the deck before trying to delete
+
+
+        // Remove the CardDeck relationship
+        base.GetService().GetCardDecks().Remove(existingCardDeck);
+
+        // Save changes to the database
+        await base.GetService().SaveChangesAsync();
+
+        // Return a success message
+        return Ok(new
+        {
+            message = $"Card with ID {cardDeck.CardID} deleted from Deck with ID {cardDeck.DeckID}."
+        });
+    }
+
+
+
+
 
     /// <summary>
     /// Retrieves all cards associated with a specific deck.

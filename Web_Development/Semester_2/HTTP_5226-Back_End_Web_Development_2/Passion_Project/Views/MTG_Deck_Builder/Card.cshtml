@@ -1,0 +1,767 @@
+
+@{
+    Layout = "_Layout";  // This tells the view to use the _Layout.cshtml file
+    string deckID = ViewData["DeckID"] as string; // Retrieve the subtitle from ViewData
+}
+
+@section Styles {
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .user-view {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        /* Styling for the header */
+        .display-4 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Search Bar Styling */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        #search-bar {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Updated dropdown list to appear above the search bar */
+
+        /* Updated dropdown list to appear below the search bar */
+        .dropdown-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 100%; /* Position the dropdown below the search bar */
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.9); /* White with some transparency */
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            display: none; /* Hidden by default */
+            max-height: 200px; /* Optional: limit height of dropdown */
+            overflow-y: auto; /* Scroll if content exceeds the max-height */
+        }
+
+
+        .dropdown-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+    
+        #cards-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between cards */
+            justify-content: flex-start; /* Align cards from the start */
+        }
+
+        .card .btn-add,
+        .card .btn-remove {
+            position: absolute;
+            top: 10px; /* Distance from the top of the card */
+            padding: 15px 30px; /* Increase button size */
+            font-size: 16px; /* Make the text bigger */
+            border: none;
+            border-radius: 8px; /* Rounded edges */
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for visibility */
+        }
+
+        .card .btn-add {
+            left: 10px; /* Position the Add button at the left */
+        }
+
+        .card .btn-remove {
+            right: 10px; /* Position the Remove button at the right */
+        }
+
+        .card .btn-add:hover,
+        .card .btn-remove:hover {
+            background-color: #0056b3;
+        }
+
+        /* Button Styling */
+        #button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }        
+
+        button {
+            padding: 8px 12px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0 5px; /* Add spacing between buttons */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #ccc; /* Disabled button styling */
+            cursor: not-allowed;
+        }
+
+        /* Styling for alerts */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+
+        #advanced-search {
+            display: flex;
+            flex-direction: column;
+            @* justify-content: space-between; *@
+            justify-content: flex-start; /* Align items to the start of the container */
+            @* align-items: center; /* Center horizontally */ *@
+            align-items: left; /* Center horizontally */
+
+            margin-top: 10px;
+            background-color: slategrey;
+            border-radius: 10px;
+            padding: 5px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .underlined-header {
+            text-align: left;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 5px; /* Adjusts the space between text and underline */
+        }
+
+        .underlined-header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px; /* Adjusts the thickness of the underline */
+            background-color: black; /* Adjust the color of the underline */
+        }
+
+
+    </style>    
+}
+<div class="text-center">
+    <h1 class="display-4">Card View </h1>
+    <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search for cards..." />
+        <ul id="dropdown-list" class="dropdown-list" style="display: none;">
+            <!-- Results will be inserted here -->
+        </ul>
+        @* <button id="=advanced-search">Advanced Search </button> *@
+        <div id="advanced-search">
+            <p class="underlined-header">Advanced Search</p>
+            <div id="colour-filter">
+
+            colour-filter:
+                <label>
+                    <input type="checkbox" id="9" />
+                    Red
+                </label>
+                
+                <!-- Plain Checkbox 2 -->
+                <label>
+                    <input type="checkbox" id="10" />
+                    Blue 
+                </label>
+                
+                <!-- Plain Checkbox 3 -->
+                <label>
+                    <input type="checkbox" id="11" />
+                    Green
+                </label>
+                <label>
+                    <input type="checkbox" id="12" />
+                    White 
+                </label>
+                <label>
+                    <input type="checkbox" id="13" />
+                    Black 
+                </label>
+
+            </div>
+            <div id="mana-cost-filter">
+            mana-cost-filter:
+
+                <label>
+                    <input type="checkbox" id="14" />
+                    1
+                </label>
+                
+                <!-- Plain Checkbox 2 -->
+                <label>
+                    <input type="checkbox" id="15" />
+                    2 
+                </label>
+                
+                <!-- Plain Checkbox 3 -->
+                <label>
+                    <input type="checkbox" id="16" />
+                    3 
+                </label>
+                <label>
+                    <input type="checkbox" id="17" />
+                    4 
+                </label>
+                <label>
+                    <input type="checkbox" id="18" />
+                    5 
+                </label>
+                <label>
+                    <input type="checkbox" id="19" />
+                    6+ 
+                </label>
+            </div>
+            <div id="power-filter">
+            power-filter:
+                <label>
+                    <input type="checkbox" id="20" />
+                    1
+                </label>
+                
+                <!-- Plain Checkbox 2 -->
+                <label>
+                    <input type="checkbox" id="21" />
+                    2 
+                </label>
+                
+                <!-- Plain Checkbox 3 -->
+                <label>
+                    <input type="checkbox" id="22" />
+                    3 
+                </label>
+                <label>
+                    <input type="checkbox" id="23" />
+                    4 
+                </label>
+                <label>
+                    <input type="checkbox" id="24" />
+                    5 
+                </label>
+                <label>
+                    <input type="checkbox" id="25" />
+                    6+ 
+                </label>
+
+            </div>
+            <div id="toughness-filter">
+            toughness-filter:
+                <label>
+                    <input type="checkbox" id="26" />
+                    1
+                </label>
+                
+                <!-- Plain Checkbox 2 -->
+                <label>
+                    <input type="checkbox" id="27" />
+                    2 
+                </label>
+                
+                <!-- Plain Checkbox 3 -->
+                <label>
+                    <input type="checkbox" id="28" />
+                    3 
+                </label>
+                <label>
+                    <input type="checkbox" id="29" />
+                    4 
+                </label>
+                <label>
+                    <input type="checkbox" id="30" />
+                    5 
+                </label>
+                <label>
+                    <input type="checkbox" id="31" />
+                    6+ 
+                </label>
+
+            </div>
+            <div id="type-filter">
+            type-filter:
+                <label>
+                    <input type="checkbox" id="0" />
+                    Legendary
+                </label>
+                
+                <!-- Plain Checkbox 2 -->
+                <label>
+                    <input type="checkbox" id="1" />
+                    Artifact
+                </label>
+                
+                <!-- Plain Checkbox 3 -->
+                <label>
+                    <input type="checkbox" id="2" />
+                    Battle
+                </label>
+                <label>
+                    <input type="checkbox" id="3" />
+                    Creature
+                </label>
+                <label>
+                    <input type="checkbox" id="4" />
+                    Emblem
+                </label>
+                <label>
+                    <input type="checkbox" id="5" />
+                    Enchantment
+                </label>
+                <label>
+                    <input type="checkbox" id="6" />
+                    Instant
+                </label>
+                
+                <label>
+                    <input type="checkbox" id="7" />
+                    Sorcery
+                </label>
+                <label>
+                    <input type="checkbox" id="8" />
+                    Token
+                </label>
+
+            </div>
+        </div>
+    </div>
+
+    <button id="prev-list">Prev</button>
+    <button id="next-list">Next</button>
+    @if (!string.IsNullOrEmpty(deckID))
+    {
+        <div class="alert alert-success">
+            @* <p>@deckID</p> <!-- Render the subtitle value --> *@
+        </div>
+    }
+    @* else
+    {
+        <div class="alert alert-warning">
+            <p>No Card ID available</p>
+        </div>
+    } *@
+    <div class="user-view">
+        <div id="deck-info">
+            @* <div id="player-id">@ViewData["PlayerID"]</div> *@
+            @* <div id="player-name">@ViewData["PlayerName"]</div> *@
+            <div id="player-decks" style="display: none; ">@ViewData["PlayerDecks"]</div>
+        </div>
+        
+        <div id="card-list">
+            <!-- cards will be inserted in here -->
+        </div>
+    </div>
+    <script>
+        const cardInfo = document.getElementById("card-info");
+        const deckInfo = document.getElementById("deck-info");
+
+        let cardList = document.getElementById("card-list");
+        
+        const nextBtn = document.getElementById("next-list");
+        const prevBtn = document.getElementById("prev-list");
+
+         // Now using the values embedded by Razor
+        const playerId = document.getElementById("player-id");
+        const playerName = document.getElementById("player-name");
+        const playerDecks = document.getElementById("player-decks").innerHTML;
+
+        
+        const searchBar = document.getElementById('search-bar');
+        // Parse the JSON string into a JavaScript object
+        const decks = JSON.parse(playerDecks);
+
+        let selectedDeckIDCardList = [];
+        let currentCardIDList = [];
+
+
+        let selectedDeckID = '';
+
+        // Now loop through the decks array
+        decks.forEach(deck => {
+            console.log("Deck ID: " + deck.ID);
+            console.log("Deck Name: " + deck.Name);
+            console.log("Deck Description: " + deck.Description);
+
+            // Optionally, you can create HTML elements dynamically
+            const deckElement = document.createElement('div');
+            deckElement.innerHTML = `
+                                    <div id=player-deck-id-${deck.ID} class="card" width: auto; margin: 10px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Deck ID: ${deck.ID}</h5> 
+                                            <h6 class="card-subtitle mb-2 text-muted">${deck.Name}</h6>
+                                            <h6 class="card-subtitle mb-2 text-muted">${deck.Description}</h6>
+                                        </div>
+                                    </div>
+                                    `;
+            deckInfo.appendChild(deckElement);
+        });
+
+        const playerDeckList = document.querySelectorAll('#deck-info .card');
+        playerDeckList.forEach(deck => {
+            deck.addEventListener('click', function() 
+            {
+                playerDeckList.forEach(d => {
+                    d.style.background = "white";
+                });
+                const deckID = deck.querySelector('.card-title').textContent.replace('Deck ID: ', '');
+                const playerDeckID = document.getElementById(`player-deck-id-${deckID}`);
+                console.log(`Deck with ID ${deckID} clicked`);
+                playerDeckID.style.background = "red";
+                selectedDeckID = deckID;
+                            
+                $.ajax({
+                    url: `/api/deck/${selectedDeckID}/allcards`,  // this is the endpoint you defined in your controller
+                    method: 'get',
+                    success: function(response) {
+                        //console.log("player decks card id retrieved successfully:", response);
+                        // If the response is successful and contains decks, you can display them
+                        if (response && response.length > 0) {
+                            // Loop through all card IDs and fetch their details
+                            for (let i = 0; i < response.length; i++) {
+                                 let cardID = response[i];
+                                 console.log(cardID);
+                                 selectedDeckIDCardList.push(cardID);
+
+
+                                //have to fix this
+                                /*
+                                currentCardIDList.forEach(card => {
+                                    const addCardButton = document.getElementById(`add-card-${card}`)
+                                    const removeCardButton = document.getElementById(`remove-card-${card}`)
+                                    //Card existing in deck then disable add button 
+                                    //also check if remove button is disabld re-enable it
+                                    if(cardID == card){
+                                        console.log(`Deck ID: ${selectedDeckID} has card ID ${card} in the current list of cards`);
+                                        addCardButton.disabled = true;
+                                        if(removeCardButton.disabled) removeCardButton.disabled = false;
+                                    }else if(cardID != card){
+                                        console.log(`Deck ID: ${selectedDeckID} does not have card ID ${card} in the current list of cards`);
+                                        if(addCardButton.disabled) addCardButton.disabled = false;
+                                        removeCardButton.disabled = true;
+                                    }
+
+                                });
+                                */
+
+
+
+
+                                 
+                            }
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching deck cards:", error);
+                    }
+                });
+            });
+        });
+
+
+        let cardsHTML = "";
+        let start = 0;
+        let end = 11;
+
+        loadCards(start, end);
+
+        nextBtn.addEventListener('click', function(event){
+            console.log("next");
+            start += 11;
+            end += 11;
+            loadCards(start, end);
+        });
+        prevBtn.addEventListener('click', function(event){
+            console.log("prev");
+            start -= 11;
+            end -= 11;
+            loadCards(start, end);
+        
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get all checkboxes inside the #advanced-search section
+            const checkboxes = document.querySelectorAll('#advanced-search input[type="checkbox"]');
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener('change', (event) => {
+                    const checkboxId = event.target.id;
+                    const isChecked = event.target.checked;
+
+                    // Handle checkbox change event
+                    console.log(`${checkboxId} is ${isChecked ? 'checked' : 'unchecked'}`);
+
+                    // Set up AJAX call to filter cards based on checkbox
+                    if (isChecked) {
+                        // Send AJAX request to filter cards
+                        $.ajax({
+                            url: `/filter-card?filterType=${checkboxId}`,  // endpoint defined in your controller
+                            method: 'get',
+                            success: function(response) {
+                                let json = JSON.parse(response); // Assuming response is a JSON string
+
+                                // Show the dropdown if there are results
+                                if (response && response.length > 0) {
+                                    json.forEach(card => {
+                                        // Handle cards here, e.g., display them in the UI
+                                        @* console.log(card); *@
+                                        @* console.log(card); *@
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error fetching deck cards:", error);
+                            }
+                        });
+                    } else {
+                        // Send AJAX request to clear filter when unchecked
+                        $.ajax({
+                            url: `/clear-card-filter?filterType=${checkboxId}`,  // endpoint to clear filter
+                            method: 'get',
+                            success: function(response) {
+                                // If the response is successful, handle it (e.g., update UI)
+                                console.log(response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Error clearing filter:", error);
+                            }
+                        });
+                    }
+
+                    // You can also perform other actions here based on whether the checkbox is checked or unchecked
+                    // Example: Update UI or store values
+                });
+            });
+        });
+
+
+        // Listen for input event on search bar
+        searchBar.addEventListener('input', function() {
+            const searchValue = searchBar.value.trim();
+
+            if (searchValue.length > 4) {
+                $.ajax({
+                    url: '/get-card-name',  // Your API endpoint
+                    type: 'GET',
+                    data: { nameStartsWith: searchValue },  // Use the searchValue here
+                    success: function(response) {
+                        // Clear previous results
+                        const dropdown = document.getElementById('dropdown-list');
+                        dropdown.innerHTML = '';
+                        let json = JSON.parse(response); // Assuming responseString is the JSON string.
+                        console.log(json);
+
+                        // Show the dropdown if there are results
+                        if (response && response.length > 0) {
+
+                            json.forEach(card => {
+                                // Create list items for each result
+                                const listItem = document.createElement('li');
+                                listItem.textContent = card.Name;  // Assuming each card has a 'Name' property
+                                listItem.classList.add('dropdown-item');
+
+                                // Optionally, add a click event to select the card from the list
+                                listItem.addEventListener('click', function() {
+                                    // Populate the search bar with the selected name
+                                    console.log(card); 
+                                    document.getElementById('search-bar').value = card.Name;
+                                    // Hide the dropdown
+                                    dropdown.style.display = 'none';
+                                    loadCards(card.ID, card.ID);
+                                });
+
+                                dropdown.appendChild(listItem);
+                            }); 
+
+                            // Show the dropdown
+                            dropdown.style.display = 'block';
+                        } else {
+                            // Hide the dropdown if no results
+                            dropdown.style.display = 'none';
+                        }
+                    },
+                    error: function() {
+                        console.error("Error fetching search results");
+                    }
+                });
+            } else {
+                // Hide the dropdown if less than 4 characters are typed
+                document.getElementById('dropdown-list').style.display = 'none';
+                loadCards(start, end);
+            }
+        });
+
+
+
+        function loadCards(start,end)
+        {
+            cardsHTML = '';
+
+            $.ajax({
+                url: `/get-range?startID=${start}&endID=${end}`,  // this is the endpoint you defined in your controller
+                method: 'get',
+                success: function(response) 
+                {
+                    let json = JSON.parse(response); // Assuming responseString is the JSON string.
+                
+                    if (json && json.length > 0) {
+                        //clera currentCardIDList 
+                        currentCardIDList = [];
+
+                        // Loop through all card IDs and fetch their details
+                        json.forEach(card => {
+                            console.log("Card ID retrieved successfully:", card.ID);
+                            console.log("Card Name retrieved successfully:", card.Name);
+                            console.log("Card Description retrieved successfully:", card.Description);
+                            console.log("Card Image URL retrieved successfully:", card.ImageUrl);
+
+                            currentCardIDList.push(card.ID);
+
+
+
+                            let cardHTML = `
+                                <!-- <div class="card" style="width: 18rem; margin: 10px;"> -->
+                                <div class="card" style=width: 20vw; margin: 10px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${card.Name}</h5>
+                                        <img class="mtg-card-view" src=" ${card.ImageUrl ? card.ImageUrl : '/assets/mtg.png'}" />
+                                        <!--
+                                        <img class="mtg-card-view" src="${card.ImageUrl}" />
+                                        <h6 class="card-subtitle mb-2 text-muted">${card.ID}</h6>
+                                        <p class="card-text">${card.Description}</p>
+                                        -->
+                                        <div class="button-group" padding: 20px;>
+                                            <button id="remove-card-${card.ID}" style="width: 40%" >-</button>
+                                            <button id="add-card-${card.ID}" style="width: 40%">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            // Append the card HTML to the cardsHTML variable
+                            cardsHTML += cardHTML;
+                        });
+                    }
+                    cardList.innerHTML = cardsHTML;
+
+                    // Now add event listeners to all dynamically created buttons
+                    const addButtons = document.querySelectorAll('[id^="add-card-"]');  // Select all add buttons
+                    const removeButtons = document.querySelectorAll('[id^="remove-card-"]');  // Select all remove buttons
+
+
+
+                    // Add event listener to each add button
+                    addButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const cardID = button.id.split('-')[2]; // Get the card ID from the button's ID
+                            console.log(`Add button clicked for Card ID: ${cardID}`);
+
+                            $.ajax({
+                                url: '/api/deck/card',  // this is the endpoint you defined in your controller
+                                method: 'post',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    DeckID: selectedDeckID,
+                                    CardID: cardID
+                                }),
+                                success: function(response) {
+                                    // Handle the response
+                                    console.log(response);
+                                    if (response.message) {
+                                        alert(response.message); // Show the message in a simple alert
+                                    } 
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error:', error);
+                                    var response = JSON.parse(xhr.responseText);
+                                    @* alert('There was an error while adding the card.'); *@
+                                    alert(response.message);
+                                }
+                            });
+                        });
+                    });
+
+                    // Add event listener to each remove button
+                    removeButtons.forEach(button => 
+                    {
+                        button.addEventListener('click', function() {
+                            const cardID = button.id.split('-')[2]; // Get the card ID from the button's ID
+                            console.log(`Remove button clicked for Card ID: ${cardID}`);
+                            // You can perform an action here, e.g., remove the card from a deck or cart
+                            $.ajax({
+                                url: '/api/deck/card',  // this is the endpoint you defined in your controller
+                                method: 'delete',
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    DeckID: selectedDeckID,
+                                    CardID: cardID,
+                                }),
+                                success: function(response) {
+                                    console.log(response);
+                                    // Handle the response
+                                    if (response.message) {
+                                        alert(response.message); // Show the message in a simple alert
+                                    } 
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error:', error);
+                                    @* alert('There was an error while deleting the card.'); *@
+                                    var response = JSON.parse(xhr.responseText);
+                                    alert(response.message);
+                                }
+                            });
+                        });
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching card details:", error);
+                }
+            });
+        }
+
+    </script>
+</div>

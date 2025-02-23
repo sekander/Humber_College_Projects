@@ -10,5 +10,6 @@ namespace Passion_Project.Models
         public int CardID { get; set; }
         // The card associated with this card-deck relationship
         public Card ?Card { get; set; }
+        
     }
 }

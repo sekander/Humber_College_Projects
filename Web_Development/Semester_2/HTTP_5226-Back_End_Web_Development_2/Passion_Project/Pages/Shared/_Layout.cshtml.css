@@ -1,0 +1,148 @@
+﻿/* Dark Theme - General styles */
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+  color: #e0e0e0; /* Light color for the brand */
+}
+
+a {
+  color: #9f9f9f; /* Lighter color for links */
+}
+
+a:hover {
+  color: #f4c542; /* Accent color on hover */
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2; /* Dark blue */
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2; /* Dark blue */
+  border-color: #1861ac;
+}
+
+.border-top {
+  border-top: 1px solid #444444; /* Darker border */
+}
+
+.border-bottom {
+  border-bottom: 1px solid #444444; /* Darker border */
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .2); /* Slightly more prominent shadow */
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+  background-color: #333; /* Dark button background */
+  color: #fff; /* Light text for button */
+  border: 1px solid #444; /* Border to match dark theme */
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+  background-color: #1f1f1f; /* Dark footer background */
+  color: #e0e0e0; /* Light text for footer */
+}
+
+.footer a {
+  color: #9f9f9f; /* Light color for links in footer */
+}
+
+.footer a:hover {
+  color: #f4c542; /* Accent color on hover for footer links */
+}
+
+/* General background and text color for the page */
+body {
+  background-color: #121212; /* Dark background */
+  color: #e0e0e0; /* Light text color */
+}
+
+.navbar {
+  background-color: #1f1f1f; /* Dark navbar */
+  color: #e0e0e0; /* Light text in navbar */
+}
+
+.navbar-nav .nav-link {
+  color: #e0e0e0; /* Light text for links */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f4c542; /* Accent color on hover for navbar links */
+}
+
+/* Navbar toggle button and other interactive elements */
+.navbar-toggler-icon {
+  background-color: #e0e0e0; /* Light icon for toggle button */
+}
+
+/* Adjustments for dark mode layout elements */
+.card {
+  background-color: #1f1f1f; /* Dark background for cards */
+  color: #e0e0e0; /* Light text in cards */
+}
+
+.card-header {
+  background-color: #333333; /* Darker header background */
+  color: #e0e0e0; /* Light header text */
+}
+
+.card-footer {
+  background-color: #333333; /* Darker footer background for cards */
+  color: #e0e0e0; /* Light text */
+}
+
+.table {
+  background-color: #1f1f1f; /* Dark background for tables */
+  color: #e0e0e0; /* Light text for table */
+}
+
+.table th, .table td {
+  border-color: #444444; /* Darker borders for table cells */
+}
+
+.form-control {
+  background-color: #333; /* Dark input field background */
+  color: #fff; /* Light text inside input fields */
+  border-color: #444; /* Darker border for input fields */
+}
+
+.form-control:focus {
+  border-color: #1b6ec2; /* Blue border on focus */
+  background-color: #444; /* Slightly lighter background on focus */
+}
+
+button, .btn {
+  background-color: #333; /* Dark background for buttons */
+  color: #fff; /* Light text for buttons */
+  border: 1px solid #444; /* Darker border for buttons */
+}
+
+button:hover, .btn:hover {
+  background-color: #444; /* Slightly lighter background on hover */
+}
+
+/* Apply dark colors to pagination links */
+.pagination .page-link {
+  background-color: #333;
+  color: #e0e0e0;
+  border-color: #444;
+}
+
+.pagination .page-link:hover {
+  background-color: #444;
+  color: #f4c542; /* Accent color on hover */
+}
+

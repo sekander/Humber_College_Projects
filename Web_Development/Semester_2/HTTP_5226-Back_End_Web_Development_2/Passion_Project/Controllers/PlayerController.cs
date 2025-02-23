@@ -31,6 +31,7 @@ public class PlayerController : BaseEntityController<Player>
         }
     }
 
+
     /// <summary>
     /// Retrieves all players from the database.
     /// </summary>
@@ -43,6 +44,7 @@ public class PlayerController : BaseEntityController<Player>
     ///     { "id": 2, "name": "Jane Smith", "email": "jane.smith@example.com" }
     /// ]
     /// </example>
+    [HttpGet]
     public override async Task<IActionResult> GetAllEntities()
     {
         Console.WriteLine("CUSTOM GET ALL PLAYERS");
@@ -59,12 +61,15 @@ public class PlayerController : BaseEntityController<Player>
     /// Response:
     /// { "id": 1, "name": "John Doe", "email": "john.doe@example.com" }
     /// </example>
+    [HttpGet("{id}")]
     public override async Task<IActionResult> GetEntity(int id)
     {
         Console.WriteLine($"CUSTOM GET PLAYER : {id}");
         return Ok(await base.GetEntity(id));
     } 
 
+
+    // [HttpGet("{id}")]
     /// <summary>
     /// Creates a new player in the database.
     /// </summary>

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Passion_Project.Interface;
 using Passion_Project.Models;
@@ -8,6 +9,8 @@ public class CardController : BaseEntityController<Card>
 {
     // A static list to store card IDs. Shared across all instances of the CardController.
     private static List<int> card_ids = new List<int>();
+
+    private IEntityService<Card> _cardService;
 
     public CardController(IEntityService<Card> entityService) : base(entityService) 
     {
@@ -29,6 +32,8 @@ public class CardController : BaseEntityController<Card>
             }
             _controllerInitialState = true;
         }
+
+        _cardService = entityService;
      }
 
     /// <summary>
@@ -48,6 +53,7 @@ public class CardController : BaseEntityController<Card>
         Console.WriteLine("CUSTOM GET ALL CARDS");
         return Ok(await base.GetAllEntities());
     }
+
 
     /// <summary>
     /// Retrieves a specific card by its ID.

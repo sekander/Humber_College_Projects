@@ -1,0 +1,176 @@
+
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #121212; /* Dark background for the body */
+  color: #e0e0e0; /* Light text color */
+}
+
+/* User view styling for dark theme */
+.user-view {
+  background-color: rgba(255, 255, 255, 0.1); /* Dark background with slight transparency */
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 20px;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+/* Card List Styling (Dark Mode) */
+#card-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  grid-gap: 20px;
+  grid-auto-rows: minmax(250px, auto);
+  justify-items: center;
+  padding: 20px 0;
+  background-color: #1f1f1f; /* Dark background for the card list */
+  border-radius: 10px;
+}
+
+.card {
+  background-color: #2a2a2a; /* Dark card background */
+  color: #fff; /* Light text in cards */
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.card-body {
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f4c542; /* Accent color for titles */
+  margin-bottom: 10px;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #b0b0b0; /* Light gray text for description */
+  margin-bottom: 15px;
+}
+
+.card-footer {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333; /* Dark footer background */
+  color: #fff; /* Light text in footer */
+  border-radius: 0 0 10px 10px;
+}
+
+/* Media query for tablet and smaller screens */
+@media (max-width: 1024px) {
+  .user-view {
+    flex-direction: column; /* Stack vertically for tablets */
+  }
+
+  #deck-info {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .deck-card {
+    width: calc(50% - 20px); /* 2 columns for tablets */
+  }
+
+  #player-decks {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+  }
+}
+
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  .user-view {
+    flex-direction: column;
+  }
+
+  #deck-info {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .deck-card {
+    width: calc(100% - 20px); /* 1 column for mobile */
+    height: 280px;
+  }
+
+  #card-list, #deck-cards {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #player-decks {
+    grid-template-columns: 1fr;
+    padding: 5px;
+  }
+
+  .deck-card {
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  #card-list {
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+    flex-direction: column;
+  }
+
+  #deck-cards {
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+    flex-direction: column;
+  }
+
+  .card {
+    height: auto;
+    min-width: 200px;
+  }
+
+  .card img {
+    max-height: 200px;
+  }
+
+  .deck-card {
+    height: 250px;
+  }
+}
