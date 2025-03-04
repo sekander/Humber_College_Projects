@@ -1,27 +1,28 @@
 <?php
 // Database connection
-$connect = mysqli_connect('localhost', 'fnky', '454732', 'MTG_Final_DB');
+$connect = mysqli_connect('***.***.*.**', '****', '******', '***_*****_**');
 
 // Check connection
 if ($connect) {
     echo "<h1>Random MTG Card Data</h1>";
     echo "<h3>Connected</h3>";
+    echo '<p id="card-flip-info" >Click Card for More Info</p>';
 
-	$random_card_query = "SELECT 
-	    uc.name, 
-	    ci.image_url,
-	    uc.released_at, 
-	    uc.mana_cost, 
-	    uc.type_line, 
-	    uc.oracle_text, 
-	    uc.power, 
-	    uc.toughness, 
-	    uc.colors, 
-	    uc.artist
-	FROM Unique_Cards uc
-	LEFT JOIN Card_Images ci ON uc.CardID = ci.id
-	ORDER BY RAND()
-	LIMIT 50;";
+        $random_card_query = "SELECT 
+            uc.name, 
+            ci.image_url,
+            uc.released_at, 
+            uc.mana_cost, 
+            uc.type_line, 
+            uc.oracle_text, 
+            uc.power, 
+            uc.toughness, 
+            uc.colors, 
+            uc.artist
+        FROM Unique_Cards uc
+        LEFT JOIN Card_Images ci ON uc.CardID = ci.id
+        ORDER BY RAND()
+        LIMIT 50;";
 
 
     // Execute query
@@ -73,9 +74,9 @@ if ($connect) {
         // Loop through each row and output it as a card
         mysqli_data_seek($cards, 0);  // Reset the pointer to the start of the result set
         while ($row = mysqli_fetch_assoc($cards)) {
-		
-	   //echo '<div class="col mb-4">';
-	   echo '<div class="col mb-4">';
+
+           //echo '<div class="col mb-4">';
+           echo '<div class="col mb-4">';
             echo '<div class="card shadow-sm card-flip">';  // Card container with flip class
 
             // Flip container for card
@@ -84,15 +85,13 @@ if ($connect) {
             // Front side of the card
             echo '<div class="card-front">';
             echo '<img src="' . htmlspecialchars($row['image_url']) . '" alt="Card Image" class="card-img-top">';
-            echo '<div class="card-body">';
-            //echo '<h5 class="card-title">' . htmlspecialchars($row['name']) . '</h5>';
-            echo '</div>';
             echo '</div>';
 
             // Back side of the card
-            echo '<div class="card-back">';
+            echo '<div  class="card-back">';
             echo '<div class="card-body">';
-	    echo '<div class="card-square">';  
+            // echo '<div style="background-color: black; opacity: 1; width: 40vw; height: 33vh; padding: 20;" class="card-square">';  
+            echo '<div class="card-square">';  
             echo '<h5 class="card-title">' . htmlspecialchars($row['name']) . '</h5>';
             echo '<p>Released: ' . htmlspecialchars($row['released_at']) . '</p>';
             echo '<p>Power: ' . htmlspecialchars($row['power']) . '</p>';
@@ -146,105 +145,151 @@ if ($connect) {
             height: auto;
         }
 
-/* Card Body Styling */
-.card-body {
-    //background-color: #2c2c2c; /* Darker background for card body */
-    background-color: rgba(0,0,0, 0);
-    color: #e0e0e0; /* Light text color */
-    padding: 15px;
-    //display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+        /* Card Body Styling */
+        .card-body {
+            //background-color: #2c2c2c; /* Darker background for card body */
+            background-color: rgba(0,0,0, 0);
+            color: #e0e0e0; /* Light text color */
+            padding: 15px;
+            //display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-
-
-
-
-	.card-body {
+        .card-body {
             height: auto;
-	}
-	
+        }
 
-	/* Card Flip Styles */
-	.card-flip {
-	    perspective: 1000px;
-	    width: 100%;
-	    height: 100%;
-	}
 
-	.card-inner {
-	    position: relative;
-	    width: 100%;
-	    height: 100%;
-	    transform-style: preserve-3d;
-	    transition: transform 0.6s;
-	}
+        /* Card Flip Styles */
+        .card-flip {
+            perspective: 1000px;
+            width: 100%;
+            height: 100%;
+        }
 
-	/* Front side of the card */
-	.card-front, .card-back {
-	    position: absolute;
-	    width: 100%;
-	    height: 100%;
-	    backface-visibility: hidden;
-	}
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
 
-	.card-front {
-	    background-color: #1c1c1c; /* Keep dark theme on front */
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    color: #fff; /* Light text color */
-	}
+        /* Front side of the card */
+        .card-front, .card-back {
+            position: absolute;
+            /* width: 100%; */
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
 
-	.card-back {
-	    background-color: #333; /* Darker back side */
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    color: #fff; /* Light text color */
-	    transform: rotateY(180deg);
-	}
+        .card-front {
+            background-color: #1c1c1c; /* Keep dark theme on front */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff; /* Light text color */
+        }
+
+        .card-back {
+            background-color: #333; /* Darker back side */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff; /* Light text color */
+            transform: rotateY(180deg);
+        }
 /*
-	.card-flip:hover .card-inner {
-	    transform: rotateY(180deg);
-	}
+        .card-flip:hover .card-inner {
+            transform: rotateY(180deg);
+        }
 */
+        .card-square {
+            background-color: black;
+            opacity: 1;
+            width: 40vw;
+            height: 33vh;
+            padding: 20px;
+        }
 
-	@media (max-width: 992px) {
-		.mt-5 {
-			margin-top: 10rem !important;
-		}
-		.mb-4 {
-			margin-bottom: 15.5rem !important;
-		}
-		.card-back {
-			font-size: 0.65rem;	
-		}
-	}
-	@media (max-width: 776px) {
-		g-4, .gy-4 {
-		  --bs-gutter-y: 18.5rem;
-		}
-		.mb-4 {
-			margin-bottom: 18.5rem !important;
-		}
-		.card-back {
-			font-size: 0.75rem;	
-		}
-	}
-	@media (max-width: 575px) {
-		.mt-5 {
-			//margin-top: 24rem !important;
-			margin-top: 30vh  !important;
-		}
-		.mb-4 {
-			margin-bottom: 31.5rem !important;
-		}
-		.card-back {
-			font-size: 1.5rem;	
-		}
-	}
+        #card-flip-info {
+            display:none;
+        }
+
+        @media (max-width: 992px) {
+                .mt-5 {
+                        margin-top: 10rem !important;
+                }
+                .mb-4 {
+                        margin-bottom: 15.5rem !important;
+                }
+                .card-back {
+                        font-size: 0.65rem;
+                }
+                .card-square {
+                    width: 24vw;  /* Adjust width for medium screens */
+                    height: 30vh; /* Adjust height for medium screens */
+                    padding: 15px; /* Adjust padding */
+                }
+                #card-flip-info {
+                    display: block;
+                }
+        }
+        @media (max-width: 776px) {
+                g-4, .gy-4 {
+                  --bs-gutter-y: 18.5rem;
+                }
+                .mb-4 {
+                        margin-bottom: 18.5rem !important;
+                }
+                .card-back {
+                        font-size: 0.75rem;
+                }
+                .card-square {
+                    width: 38vw;  /* Adjust width for smaller screens */
+                    height: 34vh; /* Adjust height for smaller screens */
+                    padding: 10px; /* Adjust padding */
+                }
+
+                #card-flip-info {
+                    display: block;
+                }
+        }
+        @media (max-width: 575px) {
+                .mt-5 {
+                        //margin-top: 24rem !important;
+                        margin-top: 30vh  !important;
+                }
+                .mb-4 {
+                        margin-bottom: 31.5rem !important;
+                }
+                .card-back {
+                        font-size: 1.25rem;
+                }
+                .card-square {
+                    width: 80vw;  /* Adjust width for extra-small screens */
+                    height: 60vh; /* Adjust height for extra-small screens */
+                    padding: 5px;  /* Adjust padding */
+                }
+                .card-image img {
+                    max-width: 70%;
+                    height: auto;
+                }
+                /* Front side of the card */
+                .card-front, .card-back {
+                    position: absolute;
+                    /* width: 100%; */
+                    width: 70%;
+                    height: 100%;
+                    backface-visibility: hidden;
+                }
+                #card-flip-info {
+                    display: block;
+                }
+
+        }
 
     </style>
 <script>
@@ -255,10 +300,10 @@ if ($connect) {
         // Toggle the transform property to flip the card
         if (cardInner.style.transform === 'rotateY(180deg)') {
             cardInner.style.transform = ''; // Reset the flip
-            this.style.background = 'rgba(0, 0, 0, 1)'; // Restore background color
+            // this.style.background = 'rgba(0, 0, 0, 1)'; // Restore background color
         } else {
             cardInner.style.transform = 'rotateY(180deg)'; // Flip the card
-            this.style.background = 'rgba(0, 0, 0, 1)'; // Set transparent background for the front side
+            // this.style.background = 'rgba(0, 0, 0, 1)'; // Set transparent background for the front side
         }
     }
 
@@ -273,4 +318,3 @@ if ($connect) {
 
 </body>
 </html>
-
