@@ -1,0 +1,3 @@
+curl https://www.superheroapi.com/api.php/d4f4b5f898eaf35d160c4a0c6a044a43/69/image
+{"response":"success","id":"69","name":"Batman","url":"https:\/\/www.superherodb.com\/pictures2\/portraits\/10\/100\/10441.jpg"}
+

@@ -1,0 +1,291 @@
+extends common/layout
+
+block layout-content 
+  .main-content 
+    h1.page-title Final#{title} 
+    p #{message}
+    // Input field for searching (optional if you need to add extra filters)
+    .user-input
+      .alphabet-links
+        each letter in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+          a(href="#" class="letter-link" data-letter=letter) #{letter}
+      //- form(action="/characters/" method="get")
+      form(id="search-input" method="get")
+        label(for="query") Enter letter:
+        input(type="text" name="query" id="search" placeholder="Enter letter")
+        button(type="submit") Filter
+      //- #hero-info(style="display: none;")
+    
+    // Display the list of characters
+    script.
+      $(document).ready(function() {
+        console.log('ready');
+        //- $('#search').click(function() {
+         $('#search').on('input', function(event) {
+          console.log('input event triggered');
+          const heroInfoDiv = $('#hero-info');
+          heroInfoDiv.hide();  // Show the hero info div
+          heroInfoDiv.innerHTML = "";
+          const comicInfoDiv = $('#comics-container');
+          comicInfoDiv.hide();  // Show the hero info div
+          comicInfoDiv.innerHTML = "";
+          //- console.log('submit ps clikced');`
+
+          event.preventDefault();  // Prevent form submission
+          var query = $('#search').val();
+          if(query.length >= 4) {
+            $('#result').empty();  // Clear the result
+            const results = $('#result');
+            results.show();
+            //- query = 'A';
+            console.log('query:', query);
+            $.get('/characters/?query=' + query, function(data) {
+              console.log('data:', data);
+                $('#result').empty();  // Clear the result
+                data.forEach(function(character) {
+
+                  $('#result').append('<button class="character-btn">' + character + '</button><br>');
+
+                });
+              //- $('#result').html(data);
+            //- $('#result').html('<a href="#">' + data + '</a>');
+            });
+          }
+          else if (query.length == 0) {
+            $('#result').empty();  // Clear the result
+          }
+        });
+
+        $('#search').on('keypress', function(event) {
+          if (event.which == 13) {  // Enter key pressed
+            event.preventDefault();  // Prevent form submission
+            $(this).blur();  // Exit the input field
+          }
+        });
+
+          // Handle click event for alphabet links
+        $('.letter-link').click(function(event) {
+          event.preventDefault();  // Prevent default link behavior
+          $('#result').empty();  // Clear the result
+          //- const results = document.getElementById('result');
+          const results = $('#result');
+          results.show();
+          const heroInfoDiv = $('#hero-info');
+          heroInfoDiv.hide();  // Show the hero info div
+          heroInfoDiv.innerHTML = "";
+          const comicInfoDiv = $('#comics-container');
+          comicInfoDiv.hide();  // Show the hero info div
+          comicInfoDiv.innerHTML = "";
+
+          var letter = $(this).data('letter');
+          console.log('letter clicked:', letter);
+            $.get('/characters/?query=' + letter, function(data) {
+            console.log('data:', data);
+            //- $('#result').html('<a href="#">' + data + '</a>');
+            data.forEach(function(character) {
+              //- $('#result').append('<a href="#">' + character + '</a><br>');
+                  //- $('#result').append('<button>' + character + '</button><br>');
+                  $('#result').append('<button class="character-btn">' + character + '</button><br>');
+            });
+          });
+        });
+
+        // Delegate event listener for dynamically created buttons
+        $('#result').on('click', '.character-btn', function() {
+          var characterName = $(this).text();
+          console.log('Button clicked:', characterName);
+          //NEED TO CLEAR HERE
+          const results = $('#result');
+          results.hide();
+            const heroInfoDiv = $('#hero-info');
+            heroInfoDiv.innerHTML = "";
+            heroInfoDiv.show();  // Show the hero info div
+            const comicInfoDiv = $('#comics-container');
+            comicInfoDiv.innerHTML = "";
+            comicInfoDiv.show();  // Show the hero info div
+
+           $.ajax({
+             type: 'GET',
+              //- url: '/docker/' + selectedValue, // The dynamic URL based on selected value
+              url: `/superhero/search?name=${characterName}`, // The dynamic URL based on selected value
+              //- data: formData,  // Send the form data as a POST request
+              success: function (response) {
+                // Handle success response here
+                //- alert('Form submitted successfully: ' + response);
+                console.log('CHaracter submitted successfully:', response);
+                $('#result').empty();  // Clear the result
+
+                 // Assuming the response is an object and you want to display the key-value pairs
+                var resultHtml = '';
+                for (var key in response) {
+                  if (response.hasOwnProperty(key)) {
+                    resultHtml += `<p><strong>${key}:</strong> ${response[key]}</p>`;
+                  }
+                }
+
+                // Render the result in an HTML element, e.g., #result div
+                //- $('#result').html(resultHtml);
+                $('#hero-info').html(resultHtml);
+                displayHeroInfo(response[0]);
+              },
+              error: function (error) {
+                // Handle error here
+                alert('An error occurred: ' + error);
+              }
+          });
+
+           //HAVE TO CHANGE ID WILL BUILD A JSON MAP THAT ASSCOCIATES EACH NAME WITH ID
+           $.ajax({
+             type: 'GET',
+              //- url: '/docker/' + selectedValue, // The dynamic URL based on selected value
+              //url: `/comic/search?id=${characterName}`, // The dynamic URL based on selected value
+              //- url: `/comic/search?id=1455`, // The dynamic URL based on selected value
+              url: `/comic/search?id=73494`, // The dynamic URL based on selected value
+              //- data: formData,  // Send the form data as a POST request
+              success: function (response) {
+                // Handle success response here
+                //- alert('Form submitted successfully: ' + response);
+                console.log('Comic submitted successfully:', response);
+                //- $('#result').empty();  // Clear the result
+
+                 // Assuming the response is an object and you want to display the key-value pairs
+                var resultHtml = '';
+                for (var key in response) {
+                  if (response.hasOwnProperty(key)) {
+                    if (typeof response[key] === 'object') {
+                      resultHtml += `<div class="comic-view"> <p><strong>${key}:</strong></p>`;
+                      for (var subKey in response[key]) {
+                        if (response[key].hasOwnProperty(subKey) && response[key][subKey] !== null) {
+                          if (subKey === 'image' && typeof response[key][subKey] === 'object') {
+                          resultHtml += `<p>&nbsp;&nbsp;<strong>${subKey}:</strong> <img src="${response[key][subKey].original_url}" alt="Image" style="width: 500px; height: auto;"></p>`;
+                          } 
+                          //WILL PUT THIS IN A BACK CARD
+                          //-   else {
+                          //- resultHtml += `<p>&nbsp;&nbsp;<strong>${subKey}:</strong> ${response[key][subKey]}</p>`;
+                          //- }
+                        }
+                      }
+                    } else if (response[key] !== null) {
+                      resultHtml += `<p><strong>${key}:</strong> ${response[key]}</p>`;
+                    }
+                    } else {
+                      resultHtml += `<p><strong>${key}:</strong> ${response[key]}</p>`;
+                    }
+                    resultHtml += `</div>`;
+                }
+
+                // Render the result in an HTML element, e.g., #result div
+                //- $('#result').html(resultHtml);
+                $('#comics-container').html(resultHtml);
+                //displayHeroInfo(response[0]);
+                //renderComics(response[0]);
+                
+              },
+              error: function (error) {
+                // Handle error here
+                alert('An error occurred: ' + error);
+              }
+          });
+
+
+
+
+
+          // Function to generate HTML content
+          function displayHeroInfo(heroData) {
+            const container = document.getElementById('hero-info');
+            container.innerHTML = "";
+            let heroHtml = `<h1>${heroData.name}</h1>`;
+            heroHtml += `<img src="${heroData.image.url}" alt="${heroData.name}" style="width: 200px; height: auto;">`;
+            heroHtml += `<h3>Powerstats:</h3>`;
+            heroHtml += `<ul>`;
+            for (let stat in heroData.powerstats) {
+              heroHtml += `<li><strong>${stat}:</strong> ${heroData.powerstats[stat]}</li>`;
+            }
+            heroHtml += `</ul>`;
+
+            heroHtml += `<h3>Biography:</h3>`;
+            heroHtml += `<ul>`;
+            heroHtml += `<li><strong>Full Name:</strong> ${heroData.biography['full-name']}</li>`;
+            heroHtml += `<li><strong>Alter Egos:</strong> ${heroData.biography['alter-egos']}</li>`;
+            heroHtml += `<li><strong>Aliases:</strong> ${heroData.biography.aliases.join(', ')}</li>`;
+            heroHtml += `<li><strong>First Appearance:</strong> ${heroData.biography['first-appearance']}</li>`;
+            heroHtml += `<li><strong>Publisher:</strong> ${heroData.biography['publisher']}</li>`;
+            heroHtml += `<li><strong>Alignment:</strong> ${heroData.biography['alignment']}</li>`;
+            heroHtml += `</ul>`;
+
+            heroHtml += `<h3>Appearance:</h3>`;
+            heroHtml += `<ul>`;
+            heroHtml += `<li><strong>Gender:</strong> ${heroData.appearance.gender}</li>`;
+            heroHtml += `<li><strong>Race:</strong> ${heroData.appearance.race}</li>`;
+            heroHtml += `<li><strong>Height:</strong> ${heroData.appearance.height.join(', ')}</li>`;
+            heroHtml += `<li><strong>Weight:</strong> ${heroData.appearance.weight.join(', ')}</li>`;
+            heroHtml += `<li><strong>Hair Color:</strong> ${heroData.appearance['hair-color']}</li>`;
+            heroHtml += `</ul>`;
+
+            // Assuming you have an element with id "hero-info" to display the data
+            document.getElementById('hero-info').innerHTML = heroHtml;
+            //- container.appendChild(heroHtml);
+
+          }
+
+          function renderComics(comicsData) {
+            // Create a container element to hold the rendered content
+            const container = document.getElementById('comics-container');
+            container.innerHTML = "";
+
+            // Check if the container exists
+            if (!container) {
+                console.error("Container element not found!");
+                return;
+            }
+
+            // Iterate over the results array to generate HTML content
+            comicsData.results.forEach(comic => {
+                const comicDiv = document.createElement('div');
+                comicDiv.classList.add('comic');
+
+                // Create an element for the comic's name (if available)
+                const comicName = comic.name ? `<h3>${comic.name}</h3>` : '<h3>Untitled</h3>';
+                comicDiv.innerHTML += comicName;
+
+                // Create an element for the comic's issue number
+                const comicIssue = `<p><strong>Issue Number:</strong> ${comic.issue_number}</p>`;
+                comicDiv.innerHTML += comicIssue;
+
+                // Create an element for the comic's description (if available)
+                if (comic.description) {
+                    const comicDescription = `<div class="description">${comic.description}</div>`;
+                    comicDiv.innerHTML += comicDescription;
+                } else {
+                    comicDiv.innerHTML += '<p><em>No description available</em></p>';
+                }
+
+                // Append the comicDiv to the container
+                container.appendChild(comicDiv);
+            });
+
+        }
+
+
+
+
+
+        });
+      });
+
+    #result
+    #hero-info(style="display: none;")
+    #comics-container(style="display: none;")
+
+
+
+    script.
+      $('#search').click(function() {
+        console.log('submit ps clikced');
+        event.preventDefault();  // Prevent form submission
+
+      });            
+
+
+    
